@@ -17,7 +17,7 @@ Learn how to build convolutional networks and use them to classify images  (face
    - Project: [Dog-Breed Classifier](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Learning%20Nano%20Degree/3.%20Convolutional%20Neural%20Networks/Project%202.%20Dog%20Breed%20Classifier)
    - Project: Optimize Your GitHub Profile
 
-## 4. Recurrent Neural Networks
+## [4. Recurrent Neural Networks](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Learning%20Nano%20Degree/4.%20Recurrent%20Neural%20Networks)
 
 Build your own recurrent networks and long short-term memory networks with  PyTorch; perform sentiment analysis and use recurrent networks to  generate new text from TV scripts.
 
