@@ -15,15 +15,15 @@ Learn neural network basics, and build your first network with Python and  NumPy
 Learn how to build convolutional networks and use them to classify images  (faces, melanomas, etc.) based on patterns and objects that appear in  them. Use these networks to learn data compression and image de-noising.
 
    - Project: [Dog-Breed Classifier](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Learning%20Nano%20Degree/3.%20Convolutional%20Neural%20Networks/Project%202.%20Dog%20Breed%20Classifier)
-   - Project: Optimize Your GitHub Profile
+   - Project: [Optimize Your GitHub Profile](https://github.com/madigun697)
 
 ## [4. Recurrent Neural Networks](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Learning%20Nano%20Degree/4.%20Recurrent%20Neural%20Networks)
 
 Build your own recurrent networks and long short-term memory networks with  PyTorch; perform sentiment analysis and use recurrent networks to  generate new text from TV scripts.
 
-   - Project: Generate TV Scripts
+   - Project: [Generate TV Scripts](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Learning%20Nano%20Degree/4.%20Recurrent%20Neural%20Networks/Project%204.%20Generate%20TV%20Scripts)
 
-## 5. Generative Adversarial Networks
+## [5. Generative Adversarial Networks](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Learning%20Nano%20Degree/5.%20Generative%20Adversarial%20Networks)
 
 Learn to understand and implement a Deep Convolutional GAN (generative  adversarial network) to generate realistic images, with Ian Goodfellow,  the inventor of GANs, and Jun-Yan Zhu, the creator of CycleGANs.
 
