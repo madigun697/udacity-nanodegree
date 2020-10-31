@@ -4,7 +4,7 @@ import random
 
 def get_new_data():
     cache_data = None
-    cache_dir = os.path.join("../cache", "sentiment_analysis")
+    cache_dir = os.path.join("./cache", "sentiment_analysis")
     
     with open(os.path.join(cache_dir, "preprocessed_data.pkl"), "rb") as f:
                 cache_data = pickle.load(f)
