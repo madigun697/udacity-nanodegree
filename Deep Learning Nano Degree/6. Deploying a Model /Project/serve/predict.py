@@ -48,7 +48,7 @@ def model_fn(model_dir):
 
 def input_fn(serialized_input_data, content_type):
     print('Deserializing the input data.')
-    if content_type == 'text/plain':
+    if content_type == 'text/plain' or content_type == 'application/octet-stream':
         data = serialized_input_data.decode('utf-8')
         return data
     raise Exception('Requested unsupported ContentType in content_type: ' + content_type)
@@ -70,7 +70,7 @@ def predict_fn(input_data, model):
     #         data_X   - A sequence of length 500 which represents the converted review
     #         data_len - The length of the review
     
-    data_X, data_len = covert_and_pad_data(review_to_words(word_dict), input_data)
+    data_X, data_len = convert_and_pad(model.word_dict, review_to_words(input_data))
 
     # Using data_X and data_len we construct an appropriate input tensor. Remember
     # that our model expects input data of the form 'len, review[500]'.
