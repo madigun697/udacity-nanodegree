@@ -130,23 +130,23 @@ RNN uses only the previous state. It means that if there are multiple subjects i
 
 - Learn gate determines what memory has to learn or has to ignore in the short-term memory
 - The previous short-term memory is combined with the current event
-- The ignore factor($$i_t$$) is calculated by previous short-term memory($$STM_{t-1}$$) and current event($$E_t$$)
+- The ignore factor(<img src="https://render.githubusercontent.com/render/math?math=i_t">) is calculated by previous short-term memory(<img src="https://render.githubusercontent.com/render/math?math=STM_{t-1}">) and current event(<img src="https://render.githubusercontent.com/render/math?math=E_t">)
 
 #### Forget Gate
 
 ![image](https://user-images.githubusercontent.com/8471958/95925288-416a9600-0d6e-11eb-9641-7209b9246034.png)
 
 - Forget gate determines what memory has to remain or has to forget in the long-term memory
-- The forget factor($$f_t$$) is calculated by previous short-term memory($$STM_{t-1}$$) and current event($$E_t$$)
+- The forget factor(<img src="https://render.githubusercontent.com/render/math?math=f_t">) is calculated by previous short-term memory(<img src="https://render.githubusercontent.com/render/math?math=STM_{t-1}">) and current event(<img src="https://render.githubusercontent.com/render/math?math=E_t">)
 
 #### Remember Gate
 
 ![image](https://user-images.githubusercontent.com/8471958/95925316-56dfc000-0d6e-11eb-9879-dad4156e6d19.png)
 
 - Remember gate determines the next long-term memory to add up results of forget gate and learn gate together
-- The result of forget gate = $$LTM_{t-1} \cdot f_t = LTM_{t-1} \cdot \sigma(W_f[STM_{t-1}, E_t] + b_f)$$
-- The result of learn gate = $$N_i \cdot i_t = tanh(W_n[STM_{t-1}, E_t] + b_n) \cdot \sigma(W_i[STM_{t-1}, E_t]+b_i)$$
-- The result of remember gate($$LTM_t$$) = $$LTM_{t-1} \cdot f_t + N_i \cdot i_t$$
+- The result of forget gate = <img src="https://render.githubusercontent.com/render/math?math=LTM_{t-1} \cdot f_t = LTM_{t-1} \cdot \sigma(W_f[STM_{t-1}, E_t] + b_f)">
+- The result of learn gate = <img src="https://render.githubusercontent.com/render/math?math=N_i \cdot i_t = tanh(W_n[STM_{t-1}, E_t] + b_n) \cdot \sigma(W_i[STM_{t-1}, E_t]+b_i)">
+- The result of remember gate<img src="https://render.githubusercontent.com/render/math?math=(LTM_t)"> = <img src="https://render.githubusercontent.com/render/math?math=LTM_{t-1} \cdot f_t + N_i \cdot i_t">
 
 #### Use Gate
 

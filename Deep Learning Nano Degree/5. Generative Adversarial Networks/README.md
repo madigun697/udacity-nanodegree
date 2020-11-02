@@ -28,7 +28,7 @@ These two parts train themselves in the opposite direction. The generator(Counte
 
 #### Generator
 
-The generator looks like the decoder in Autoencoder. It creates the new sample data from the latent sample vector $$z$$. $$z$$ is the specific size vector with random values. The generator network is not limited. It can use the FFNs(Feed-Forward Networks) or Transpose Convolutional layers like decoder.
+The generator looks like the decoder in Autoencoder. It creates the new sample data from the latent sample vector <img src="https://render.githubusercontent.com/render/math?math=z">. <img src="https://render.githubusercontent.com/render/math?math=z"> is the specific size vector with random values. The generator network is not limited. It can use the FFNs(Feed-Forward Networks) or Transpose Convolutional layers like decoder.
 
 #### Discriminator
 
@@ -794,18 +794,18 @@ with open('train_samples_cgan_mc_label.pkl', 'wb') as f:
 When a CycleGAN trains, and sees one batch of real images from set $X$ and $Y$, it trains by performing the following steps:
 
 **Training the Discriminators**
-1. Compute the discriminator $D_X$ loss on real images
-2. Generate fake images that look like domain $X$ based on real images in domain $Y$
-3. Compute the fake loss for $D_X$
-4. Compute the total loss and perform backpropagation and $D_X$ optimization
-5. Repeat steps 1-4 only with $D_Y$ and your domains switched!
-
+1. Compute the discriminator <img src="https://render.githubusercontent.com/render/math?math=D_X"> loss on real images
+2. Generate fake images that look like domain <img src="https://render.githubusercontent.com/render/math?math=X"> based on real images in domain <img src="https://render.githubusercontent.com/render/math?math=Y">
+3. Compute the fake loss for <img src="https://render.githubusercontent.com/render/math?math=D_X">
+4. Compute the total loss and perform backpropagation and <img src="https://render.githubusercontent.com/render/math?math=D_X"> optimization
+5. Repeat steps 1-4 only with <img src="https://render.githubusercontent.com/render/math?math=D_Y"> and your domains switched!
 
 **Training the Generators**
-1. Generate fake images that look like domain $X$ based on real images in domain $Y$
-2. Compute the generator loss based on how $D_X$ responds to fake $X$
-3. Generate *reconstructed* $\hat{Y}$ images based on the fake $X$ images generated in step 1
-4. Compute the cycle consistency loss by comparing the reconstructions with real $Y$ images
+
+1. Generate fake images that look like domain <img src="https://render.githubusercontent.com/render/math?math=X"> based on real images in domain <img src="https://render.githubusercontent.com/render/math?math=Y">
+2. Compute the generator loss based on how <img src="https://render.githubusercontent.com/render/math?math=D_X"> responds to fake <img src="https://render.githubusercontent.com/render/math?math=X">
+3. Generate *reconstructed* <img src="https://render.githubusercontent.com/render/math?math=\hat{Y}"> images based on the fake <img src="https://render.githubusercontent.com/render/math?math=X"> images generated in step 1
+4. Compute the cycle consistency loss by comparing the reconstructions with real <img src="https://render.githubusercontent.com/render/math?math=Y"> images
 5. Repeat steps 1-4 only swapping domains
 6. Add up all the generator and reconstruction losses and perform backpropagation + optimization
 

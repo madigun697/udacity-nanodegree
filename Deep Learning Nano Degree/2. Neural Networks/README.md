@@ -28,7 +28,7 @@ This chapter includes a mini-project, Sentiment Analysis, with Andrew Trask, the
 
 ### Perceptron
 
-As a simplest Feed-Foward Network, perceptron determines the output using input values and their weights. It can be expressed a equation like $$w_1x_1 + w_2x_2 + b = y$$.
+As a simplest Feed-Foward Network, perceptron determines the output using input values and their weights. It can be expressed a equation like <img src="https://render.githubusercontent.com/render/math?math=w_1x_1 + w_2x_2 + b = y">.
 
 <img width="642" alt="image" src="https://user-images.githubusercontent.com/8471958/97819429-53e53a80-1c5d-11eb-9403-733343393d43.png">
 
@@ -38,15 +38,15 @@ As a simplest Feed-Foward Network, perceptron determines the output using input 
 
 In the classification problem, Cross-Entropy is usually used as a loss function. 
 
-$$CE = -(ylog(p) + 1(1-y)log(1-p))$$ where $$y$$ is actual value(1 or 0), $$p$$ is predicted probability(between 0 and 1).
+<img src="https://render.githubusercontent.com/render/math?math=CE = -(ylog(p) + 1(1-y)log(1-p))"> where <img src="https://render.githubusercontent.com/render/math?math=y"> is actual value(1 or 0), <img src="https://render.githubusercontent.com/render/math?math=p"> is predicted probability(between 0 and 1).
 
-So, if the actual value is 1, cross-entropy is $$-log(p)$$. And if the actual value is 0, cross-entropy is $$-log(1-p)$$
+So, if the actual value is 1, cross-entropy is <img src="https://render.githubusercontent.com/render/math?math=-log(p)">. And if the actual value is 0, cross-entropy is <img src="https://render.githubusercontent.com/render/math?math=-log(1-p)">
 
 #### MSE(Mean Squared Error)
 
 In the regression problem, MSE is usually used as a loss function. This is a very simple loss function, the mean of differences between actual and predicted values.
 
-$$MSE = {{1}\over{n}} \Sigma^n_{i=1} {(Y_i - \hat{Y_i})}^2 $$ where $$Y_i$$ is actual value, $$\hat{Y_i}$$ is precited value.
+<img src="https://render.githubusercontent.com/render/math?math=MSE = {{1}\over{n}} \Sigma^n_{i=1} {(Y_i - \hat{Y_i})}^2"> where <img src="https://render.githubusercontent.com/render/math?math=Y_i"> is actual value, <img src="https://render.githubusercontent.com/render/math?math=\hat{Y_i}"> is precited value.
 
 ### Activation Functions
 
@@ -90,7 +90,7 @@ In this mini-project, I build a simple fully connected neural network(or Feed-Fo
 
 Input data is the IMDB's review texts. Before the model train, every review pre-process. Each word in the review texts counts how many appear in the positive reviews and negative reviews in the pre-processing phases. And the ratio of positive to negative is calculated and used as an input data set.
 
-An activation function is sigmoid, and a loss function is a simple error ($$\hat{y} -y$$).
+An activation function is sigmoid, and a loss function is a simple error (<img src="https://render.githubusercontent.com/render/math?math=\hat{y} -y">).
 
 The following image is the result of the training:
 
