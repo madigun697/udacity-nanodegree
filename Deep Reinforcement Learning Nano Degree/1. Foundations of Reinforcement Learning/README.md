@@ -33,9 +33,8 @@
 #### Terminologies
 
 - **Agent**: learner or decision maker, born into the world w/o any understanding of how anything works
-
+- The agent learned to interact with environment
 - **Feedback**: Rewards(Positive feedback) or discoursing feedback
-
 - **Goal**: Maximize rewards
 
 #### Exploration-Exploitation Dilemma
@@ -46,13 +45,15 @@
 
 - Balancing these competing requirements
 
-#### Reinforcement learning structure
+### Reinforcement learning framework
 
-- The agent learned to interact with environment
+#### Setting
 
-  ![image](https://user-images.githubusercontent.com/8471958/98735523-59770a80-2358-11eb-911b-23bbceafb418.png)
+![image](https://user-images.githubusercontent.com/8471958/98735523-59770a80-2358-11eb-911b-23bbceafb418.png)
 
-- State(Observation, <img src="https://render.githubusercontent.com/render/math?math=S_t">), Action(<img src="https://render.githubusercontent.com/render/math?math=A_t">), Reward(<img src="https://render.githubusercontent.com/render/math?math=R_t">)
+- State(Observation, <img src="https://render.githubusercontent.com/render/math?math=S_t">): the environment presents a situation to the agent
+- Action(<img src="https://render.githubusercontent.com/render/math?math=A_t">): appropriate actions in response
+- Reward(<img src="https://render.githubusercontent.com/render/math?math=R_t">): One time step later, the agent receives
 - **Goal of the Agent: Maximize expected cumulative reward**
 
 #### Epicsodic task & Continuing task
@@ -67,16 +68,59 @@
   - Tasks that continue forever, without end
   - Interaction continues without limit
 
-#### Goal and Rewards
-
-##### Goal
+#### Rewards
 
 -  Reward Hypothesis: All goals can be framed as the maximazation of expected cumulative reward
 
-##### Reward
-
-- Cumulative return: <img src="https://render.githubusercontent.com/render/math?math=G_t = R_{t%2B1}%2BR_{t%2B2}%2BR_{t%2B3}%2B\R_{t%2B4}%2B\cdots">
+- Cumulative reward(return): <img src="https://render.githubusercontent.com/render/math?math=G_t = R_{t%2B1}%2BR_{t%2B2}%2BR_{t%2B3}%2B\R_{t%2B4}%2B\cdots">
   - At time step <img src="https://render.githubusercontent.com/render/math?math=t">, the agent picks <img src="https://render.githubusercontent.com/render/math?math=A_t">to maximize (expected) <img src="https://render.githubusercontent.com/render/math?math=G_t">
-- Discounted return: <img src="https://render.githubusercontent.com/render/math?math=G_t = R_{t%2B1}%2B\gamma R_{t%2B2}%2B\gamma^2 R_{t%2B3}%2B\gamma^3 R_{t%2B4}%2B\cdots">
+- Discounted reward(return): <img src="https://render.githubusercontent.com/render/math?math=G_t = R_{t%2B1}%2B\gamma R_{t%2B2}%2B\gamma^2 R_{t%2B3}%2B\gamma^3 R_{t%2B4}%2B\cdots">
   - discount rate <img src="https://render.githubusercontent.com/render/math?math=\gamma \in [0, 1]">
 
+#### Markov Decision Process (MDP)
+
+![img](https://video.udacity-data.com/topher/2017/September/59c3f51a_screen-shot-2017-09-21-at-12.20.30-pm/screen-shot-2017-09-21-at-12.20.30-pm.png)
+
+- A (finite) MDP is defined by
+  - a (finite) set of states <img src="https://render.githubusercontent.com/render/math?math=S">
+  - a (finite) set of actions <img src="https://render.githubusercontent.com/render/math?math=A">
+  - a (finite) set of rewards <img src="https://render.githubusercontent.com/render/math?math=R">
+  - the one-step dynamics of the environment
+    <img src="https://render.githubusercontent.com/render/math?math=p(s',r|s,a) \doteq \mathbb{P}(S_{t+1}=s', R_{t+1}=r|S_t = s, A_t=a)"> for all <img src="https://render.githubusercontent.com/render/math?math=s, s`, a and r">
+  - a discount rate <img src="https://render.githubusercontent.com/render/math?math=\gamma \in [0, 1]">
+
+#### Policies
+
+##### Policies
+
+- A policy determines how an agent chooses an action in response to the current state
+- It specifies how the agent responds to situations that the environment has presented.
+
+- Deterministic policy(<img src="https://render.githubusercontent.com/render/math?math=\pi:\mathcal{S} \rightarrow \mathcal{A}">)
+  - Return a specific action by state
+- Stochastic policy(<img src="https://render.githubusercontent.com/render/math?math=\pi:\mathcal{S} \times \mathcal{A} \rightarrow [0,1])">
+  - <img src="https://render.githubusercontent.com/render/math?math=\pi(a|s) = \mathbb{P}(A_t = a | S_t = s)"> 
+  - Return probabilities of action set by state and action set
+
+##### Optimal Policies
+
+1. State-Value Function
+   - The value of state <img src="https://render.githubusercontent.com/render/math?math=s"> under a policy <img src="https://render.githubusercontent.com/render/math?math=\pi">
+   - <img src="https://render.githubusercontent.com/render/math?math=v_\pi(s) = \mathbb{E}_\pi[G_t|S_t=s]"> 
+   - For each state <img src="https://render.githubusercontent.com/render/math?math=s">, it yields the expected return(<img src="https://render.githubusercontent.com/render/math?math=G_t">), if the agent start in state s(<img src="https://render.githubusercontent.com/render/math?math=S_t=s">) and then uses policy(<img src="https://render.githubusercontent.com/render/math?math=\pi">) to choose its actions for all time steps.
+
+   - Bellman Expectation Equation
+     - Equation to calculate the value of any state is the sum of the immediate reward and the discounted value of the state that follow.
+     - <img src="https://render.githubusercontent.com/render/math?math=v_\pi(s) = \mathbb{E}_\pi[R_{t+1} + \gamma v_\pi(S_{t+1}|S_t = s)]"> 
+
+2. Action-Value Function
+
+   - The value of taking action <img src="https://render.githubusercontent.com/render/math?math=a"> in state <img src="https://render.githubusercontent.com/render/math?math=s"> under a policy <img src="https://render.githubusercontent.com/render/math?math=\pi">
+   - <img src="https://render.githubusercontent.com/render/math?math=q_\pi(s, a) = \mathbb{E}_\pi[G_t|S_t=s,A_t=a]"> 
+   - <img src="https://render.githubusercontent.com/render/math?math=v_\pi(s) = q_\pi(s, \pi(s))$ if $\pi$ is a deterministic policy and all $s \in \mathcal{S}"> 
+
+3. Optimality
+   - Compare with two policies
+     - <img src="https://render.githubusercontent.com/render/math?math=\pi' \ge \pi"> if and only if <img src="https://render.githubusercontent.com/render/math?math=v_{\pi'}(s) \ge v_\pi(s)\text{ for all }s \in \mathcal{S}">
+   - The optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_\star"> satisfies <img src="https://render.githubusercontent.com/render/math?math=\pi_\star \ge \pi \text{ for all }\pi">
+   - Once the agent determines the optimal action-value function <img src="https://render.githubusercontent.com/render/math?math=q_*">, it can quickly obtain an optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_*"> by setting <img src="https://render.githubusercontent.com/render/math?math=\pi_*(s) = \arg\max_{a\in\mathcal{A}(s)} q_*(s,a)">.
