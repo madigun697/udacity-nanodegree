@@ -127,7 +127,7 @@
 
 ### Monte Carlo Methods
 
-- equiprobable random policy: the agent choose an action in the action set with same probabilities.
+- Equiprobable random policy: the agent choose an action in the action set with same probabilities.
 
 - The action-value function with a Q-table
   - To find optimal policy, the agent tries many episodes.
@@ -136,3 +136,57 @@
 - MC Prediction
   - Every-visit MC Prediction: Fill out the Q-table with average value of observations
   - First-visit MC Prediction: Fill out the Q-table with value of first observation
+
+### MC Control
+
+- Control Problem: Estimate the optimal policy
+- MC Control Method: a solution for the control problem
+  - Step 1: Using the policy $\pi$ to construct the Q-table
+  - Step 2: improving the policy by changing it to be $\epsilon$-greedy with respect to the Q-table ($\pi' \leftarrow \epsilon\text{-greedy}(Q), \pi \leftarrow \pi'$)
+  - Eventually obtain the optimal policy $\pi_*$
+
+#### Greedy Policies
+
+- Greedy Policies
+  - Collect episodes with $\pi$ and estimate the Q-table
+  - Initial policy is the equiprobable random policy
+  - Use the Q-table to find a better policy $\pi'$ and set $\pi \leftarrow \pi'$
+  - Iterate these steps
+
+- Epsilon-Greedy Policies
+  - Greedy policy is always selects the greedy action
+  - Epsilon-Greedy policy is most likely selects the greedy action
+  - Set a specific value $\epsilon (0\le\epsilon\le1)$ 
+  - $\epsilon$ is a probability that the agent selects random actions instead of the greedy action
+
+#### Exploration-Exploitation Dilemma
+
+- Exploration: Prefer to select randomly
+- Exploitation: Prefer to select the greedy action
+- Greedy in the Limit with Infinite Exploration(GLIE)
+  - The conditions to guarantee that MC control converges to the optimal policy $\pi_*$
+  - Every state-action pair $s, a$(for all $s \in \mathcal{S}$ and $a \in \mathcal{A}(s)$) is visited infinitely many times
+    - The agent continues to explore (never stop to explore)
+    - $\epsilon_t > 0$
+  - The policy converges to a policy that is greedy with respect to the action-value function estimate $\Q$
+    - The agent gradually exploits more and explores less
+    - $\lim_{t\rightarrow \infty}\epsilon_t = 0$
+
+####  Incremental Mean
+
+- To reduce time, update Q-table after every episode.
+- Update Q-table could be used to improve the policy
+  - $Q \leftarrow Q + {1 \over N}(G - Q)$
+
+- Problem
+  - $N$(The number of steps in the episode) is bigger and bigger, the effect of denotation($G-Q$) is smaller and smaller
+  - Every state-action pair is not effected to $Q$ evenly
+
+#### Contant-alpha
+
+- To solve the problem of Incremental Mean, uses constant value, $\alpha$ instead of $1 \over N$
+  - $Q \leftarrow Q + \alpha(G-Q)$
+    $Q \leftarrow (1-\alpha)Q + \alpha G$
+  - if $\alpha = 0$, then the Q-table is never updated → **Exploitation**
+    if $\alpha = 1$, then the previous result(previous $Q$) is always ignored → **Exploration**
+
