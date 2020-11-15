@@ -124,3 +124,15 @@
      - <img src="https://render.githubusercontent.com/render/math?math=\pi' \ge \pi"> if and only if <img src="https://render.githubusercontent.com/render/math?math=v_{\pi'}(s) \ge v_\pi(s)\text{ for all }s \in \mathcal{S}">
    - The optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_\star"> satisfies <img src="https://render.githubusercontent.com/render/math?math=\pi_\star \ge \pi \text{ for all }\pi">
    - Once the agent determines the optimal action-value function <img src="https://render.githubusercontent.com/render/math?math=q_*">, it can quickly obtain an optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_*"> by setting <img src="https://render.githubusercontent.com/render/math?math=\pi_*(s) = \arg\max_{a\in\mathcal{A}(s)} q_*(s,a)">.
+
+### Monte Carlo Methods
+
+- equiprobable random policy: the agent choose an action in the action set with same probabilities.
+
+- The action-value function with a Q-table
+  - To find optimal policy, the agent tries many episodes.
+  - Q-table is the expected value matrix by states and actions based on results of episodes.
+    - Each episode create a matrix and final Q-table has average values of these matrixes.
+- MC Prediction
+  - Every-visit MC Prediction: Fill out the Q-table with average value of observations
+  - First-visit MC Prediction: Fill out the Q-table with value of first observation
