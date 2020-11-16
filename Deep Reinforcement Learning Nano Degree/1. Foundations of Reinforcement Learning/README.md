@@ -125,7 +125,7 @@
    - The optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_\star"> satisfies <img src="https://render.githubusercontent.com/render/math?math=\pi_\star \ge \pi \text{ for all }\pi">
    - Once the agent determines the optimal action-value function <img src="https://render.githubusercontent.com/render/math?math=q_*">, it can quickly obtain an optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_*"> by setting <img src="https://render.githubusercontent.com/render/math?math=\pi_*(s) = \arg\max_{a\in\mathcal{A}(s)} q_*(s,a)">.
 
-### Monte Carlo Methods
+### [Monte Carlo Methods](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/1.%20Foundations%20of%20Reinforcement%20Learning/Lesson%208.%20Monte%20Carlo%20Methods)
 
 - Equiprobable random policy: the agent choose an action in the action set with same probabilities.
 
@@ -195,6 +195,8 @@
 - Monte Carlo methods need to end the interaction
   - In the self-driving car, MC methods updates the policy after crash
 - Temporal-Difference methods updates the policy every step
+- On-policy TD control methods (like Expected Sarsa and Sarsa) have  better online performance than off-policy TD control methods (like  Q-learning). 
+- Expected Sarsa generally achieves better performance than Sarsa.
 
 #### TD Control
 
