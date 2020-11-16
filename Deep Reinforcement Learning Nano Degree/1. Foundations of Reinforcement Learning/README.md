@@ -86,7 +86,7 @@
   - a (finite) set of actions <img src="https://render.githubusercontent.com/render/math?math=A">
   - a (finite) set of rewards <img src="https://render.githubusercontent.com/render/math?math=R">
   - the one-step dynamics of the environment
-    <img src="https://render.githubusercontent.com/render/math?math=p(s',r|s,a) \doteq \mathbb{P}(S_{t+1}=s', R_{t+1}=r|S_t = s, A_t=a)"> for all <img src="https://render.githubusercontent.com/render/math?math=s, s`, a and r">
+    <img src="https://render.githubusercontent.com/render/math?math=p(s',r|s,a) \doteq \mathbb{P}(S_{t%2B1}=s', R_{t%2B1}=r|S_t = s, A_t=a)"> for all <img src="https://render.githubusercontent.com/render/math?math=s, s`, a and r">
   - a discount rate <img src="https://render.githubusercontent.com/render/math?math=\gamma \in [0, 1]">
 
 #### Policies
@@ -111,7 +111,7 @@
 
    - Bellman Expectation Equation
      - Equation to calculate the value of any state is the sum of the immediate reward and the discounted value of the state that follow.
-     - <img src="https://render.githubusercontent.com/render/math?math=v_\pi(s) = \mathbb{E}_\pi[R_{t+1} + \gamma v_\pi(S_{t+1}|S_t = s)]"> 
+     - <img src="https://render.githubusercontent.com/render/math?math=v_\pi(s) = \mathbb{E}_\pi[R_{t%2B1} %2B \gamma v_\pi(S_{t%2B1}|S_t = s)]"> 
 
 2. Action-Value Function
 
@@ -137,56 +137,84 @@
   - Every-visit MC Prediction: Fill out the Q-table with average value of observations
   - First-visit MC Prediction: Fill out the Q-table with value of first observation
 
-### MC Control
+#### MC Control
 
 - Control Problem: Estimate the optimal policy
 - MC Control Method: a solution for the control problem
-  - Step 1: Using the policy $\pi$ to construct the Q-table
-  - Step 2: improving the policy by changing it to be $\epsilon$-greedy with respect to the Q-table ($\pi' \leftarrow \epsilon\text{-greedy}(Q), \pi \leftarrow \pi'$)
-  - Eventually obtain the optimal policy $\pi_*$
+  - Step 1: Using the policy <img src="https://render.githubusercontent.com/render/math?math=\pi"> to construct the Q-table
+  - Step 2: improving the policy by changing it to be <img src="https://render.githubusercontent.com/render/math?math=\epsilon">-greedy with respect to the Q-table (<img src="https://render.githubusercontent.com/render/math?math=\pi' \leftarrow \epsilon\text{-greedy}(Q), \pi \leftarrow \pi'">)
+  - Eventually obtain the optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_*">
 
 #### Greedy Policies
 
 - Greedy Policies
-  - Collect episodes with $\pi$ and estimate the Q-table
+  - Collect episodes with <img src="https://render.githubusercontent.com/render/math?math=\pi"> and estimate the Q-table
   - Initial policy is the equiprobable random policy
-  - Use the Q-table to find a better policy $\pi'$ and set $\pi \leftarrow \pi'$
+  - Use the Q-table to find a better policy <img src="https://render.githubusercontent.com/render/math?math=\pi'"> and set <img src="https://render.githubusercontent.com/render/math?math=\pi \leftarrow \pi'">
   - Iterate these steps
 
 - Epsilon-Greedy Policies
   - Greedy policy is always selects the greedy action
   - Epsilon-Greedy policy is most likely selects the greedy action
-  - Set a specific value $\epsilon (0\le\epsilon\le1)$ 
-  - $\epsilon$ is a probability that the agent selects random actions instead of the greedy action
+  - Set a specific value <img src="https://render.githubusercontent.com/render/math?math=\epsilon (0\le\epsilon\le1)">
+  - <img src="https://render.githubusercontent.com/render/math?math=\epsilon"> is a probability that the agent selects random actions instead of the greedy action
 
 #### Exploration-Exploitation Dilemma
 
 - Exploration: Prefer to select randomly
 - Exploitation: Prefer to select the greedy action
 - Greedy in the Limit with Infinite Exploration(GLIE)
-  - The conditions to guarantee that MC control converges to the optimal policy $\pi_*$
-  - Every state-action pair $s, a$(for all $s \in \mathcal{S}$ and $a \in \mathcal{A}(s)$) is visited infinitely many times
+  - The conditions to guarantee that MC control converges to the optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_*">
+  - Every state-action pair <img src="https://render.githubusercontent.com/render/math?math=s, a">(for all <img src="https://render.githubusercontent.com/render/math?math=s \in \mathcal{S}"> and <img src="https://render.githubusercontent.com/render/math?math=a \in \mathcal{A}(s)">) is visited infinitely many times
     - The agent continues to explore (never stop to explore)
-    - $\epsilon_t > 0$
-  - The policy converges to a policy that is greedy with respect to the action-value function estimate $\Q$
+    - <img src="https://render.githubusercontent.com/render/math?math=\epsilon_t > 0"> 
+  - The policy converges to a policy that is greedy with respect to the action-value function estimate <img src="https://render.githubusercontent.com/render/math?math=\Q">
     - The agent gradually exploits more and explores less
-    - $\lim_{t\rightarrow \infty}\epsilon_t = 0$
+    - <img src="https://render.githubusercontent.com/render/math?math=\lim_{t\rightarrow \infty}\epsilon_t = 0"> 
 
 ####  Incremental Mean
 
 - To reduce time, update Q-table after every episode.
 - Update Q-table could be used to improve the policy
-  - $Q \leftarrow Q + {1 \over N}(G - Q)$
+  - <img src="https://render.githubusercontent.com/render/math?math=Q \leftarrow Q %2B {1 \over N}(G - Q)"> 
 
 - Problem
-  - $N$(The number of steps in the episode) is bigger and bigger, the effect of denotation($G-Q$) is smaller and smaller
-  - Every state-action pair is not effected to $Q$ evenly
+  - <img src="https://render.githubusercontent.com/render/math?math=N">(The number of steps in the episode) is bigger and bigger, the effect of denotation(<img src="https://render.githubusercontent.com/render/math?math=G-Q">) is smaller and smaller
+  - Every state-action pair is not effected to <img src="https://render.githubusercontent.com/render/math?math=Q"> evenly
 
-#### Contant-alpha
+#### Constant-alpha
 
-- To solve the problem of Incremental Mean, uses constant value, $\alpha$ instead of $1 \over N$
-  - $Q \leftarrow Q + \alpha(G-Q)$
-    $Q \leftarrow (1-\alpha)Q + \alpha G$
-  - if $\alpha = 0$, then the Q-table is never updated → **Exploitation**
-    if $\alpha = 1$, then the previous result(previous $Q$) is always ignored → **Exploration**
+- To solve the problem of Incremental Mean, uses constant value, <img src="https://render.githubusercontent.com/render/math?math=\alpha"> instead of <img src="https://render.githubusercontent.com/render/math?math=1 \over N">
+  - <img src="https://render.githubusercontent.com/render/math?math=Q \leftarrow Q %2B \alpha(G-Q)">
+    <img src="https://render.githubusercontent.com/render/math?math=Q \leftarrow (1-\alpha)Q %2B \alpha G">
+  - if <img src="https://render.githubusercontent.com/render/math?math=\alpha = 0">, then the Q-table is never updated → **Exploitation**
+    if <img src="https://render.githubusercontent.com/render/math?math=\alpha = 1">, then the previous result(previous $Q$) is always ignored → **Exploration**
+
+### Temporal-Difference Methods
+
+- Monte Carlo methods need to end the interaction
+  - In the self-driving car, MC methods updates the policy after crash
+- Temporal-Difference methods updates the policy every step
+
+#### TD Control
+
+- It's similar to MC constant-alpha
+- The value is updated in every step instead of after episode ends
+  - MC: Update the effect of denotation <img src="https://render.githubusercontent.com/render/math?math=G-Q">, where <img src="https://render.githubusercontent.com/render/math?math=G"> is the cumulated rewards after time <img src="https://render.githubusercontent.com/render/math?math=t">
+  - TD (**Sarsa**): Using <img src="https://render.githubusercontent.com/render/math?math=R_{t%2B1} %2B \gamma Q_{t%2B1}"> instead of <img src="https://render.githubusercontent.com/render/math?math=G">
+
+#### Sarsa (Sarsa(0))
+
+- <img src="https://render.githubusercontent.com/render/math?math=Q(S_t, A_t) \leftarrow Q(S_t, A_t) %2B \alpha(R_{t%2B1} %2B \gamma Q(S_{t%2B1}, A_{t%2B1}) - Q(S_t, A_t))"> 
+
+#### Q-Leraning(Sarsamax)
+
+- In the Sarsa, uses <img src="https://render.githubusercontent.com/render/math?math=Q(S_{t%2B1}, A_{t%2B1})"> to estimate future rewards
+- In the Q-Learning, uses <img src="https://render.githubusercontent.com/render/math?math=max_{a \in \mathcal{A}} Q(S_{t%2B1}, a)">
+- <img src="https://render.githubusercontent.com/render/math?math=Q(S_t, A_t) \leftarrow Q(S_t, A_t) %2B \alpha(R_{t%2B1} %2B \gamma max_{a \in \mathcal{A}} Q(S_{t%2B1}, a) - Q(S_t, A_t))"> 
+
+#### Expected Sarsa
+
+- Using expected rewards (probability of actions x expected rewards), instead of maximum rewards in the Q-learning
+- <img src="https://render.githubusercontent.com/render/math?math=Q(S_t, A_t) \leftarrow Q(S_t, A_t) %2B \alpha(R_{t%2B1} %2B \gamma \sum_{a \in \mathcal{A}} \pi (a|S_{t%2B1}) Q(S_{t%2B1}, a) - Q(S_t, A_t))"> 
 
