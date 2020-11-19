@@ -18,7 +18,7 @@
 
 *Train a car to navigate a steep hill using Q-learning.*
 
-## Foundations of Reinforcement Leraning
+## Foundations of Reinforcement Learning
 
 ### Reinforcement learning(RL)
 
@@ -32,8 +32,8 @@
 
 #### Terminologies
 
-- **Agent**: learner or decision maker, born into the world w/o any understanding of how anything works
-- The agent learned to interact with environment
+- **Agent**: learner or decision-maker, born into the world w/o any understanding of how anything works
+- The agent learned to interact with the environment
 - **Feedback**: Rewards(Positive feedback) or discoursing feedback
 - **Goal**: Maximize rewards
 
@@ -53,27 +53,27 @@
 
 - State(Observation, <img src="https://render.githubusercontent.com/render/math?math=S_t">): the environment presents a situation to the agent
 - Action(<img src="https://render.githubusercontent.com/render/math?math=A_t">): appropriate actions in response
-- Reward(<img src="https://render.githubusercontent.com/render/math?math=R_t">): One time step later, the agent receives
-- **Goal of the Agent: Maximize expected cumulative reward**
+- Reward(<img src="https://render.githubusercontent.com/render/math?math=R_t">): One-time step later, the agent receives
+- **The goal of the Agent: Maximize expected cumulative reward**
 
-#### Epicsodic task & Continuing task
+#### Episodic task & Continuing task
 
 - Task: an instance of the reinforcement learning problem
-- Epicsodic task
+- Episodic task
   - Tasks with a well-defined starting and ending point
   - There is a specific ending point(**Terminal state**)
   - An Episode means that interaction ends at some time step <img src="https://render.githubusercontent.com/render/math?math=T">
-  - Reward is given at ending point
+  - The reward is given at the ending point
 - Continuing task
   - Tasks that continue forever, without end
   - Interaction continues without limit
 
 #### Rewards
 
--  Reward Hypothesis: All goals can be framed as the maximazation of expected cumulative reward
+-  Reward Hypothesis: All goals can be framed as the maximization of expected cumulative reward
 
 - Cumulative reward(return): <img src="https://render.githubusercontent.com/render/math?math=G_t = R_{t%2B1}%2BR_{t%2B2}%2BR_{t%2B3}%2B\R_{t%2B4}%2B\cdots">
-  - At time step <img src="https://render.githubusercontent.com/render/math?math=t">, the agent picks <img src="https://render.githubusercontent.com/render/math?math=A_t">to maximize (expected) <img src="https://render.githubusercontent.com/render/math?math=G_t">
+  - At the time step <img src="https://render.githubusercontent.com/render/math?math=t">, the agent picks <img src="https://render.githubusercontent.com/render/math?math=A_t">to maximize (expected) <img src="https://render.githubusercontent.com/render/math?math=G_t">
 - Discounted reward(return): <img src="https://render.githubusercontent.com/render/math?math=G_t = R_{t%2B1}%2B\gamma R_{t%2B2}%2B\gamma^2 R_{t%2B3}%2B\gamma^3 R_{t%2B4}%2B\cdots">
   - discount rate <img src="https://render.githubusercontent.com/render/math?math=\gamma \in [0, 1]">
 
@@ -107,15 +107,15 @@
 1. State-Value Function
    - The value of state <img src="https://render.githubusercontent.com/render/math?math=s"> under a policy <img src="https://render.githubusercontent.com/render/math?math=\pi">
    - <img src="https://render.githubusercontent.com/render/math?math=v_\pi(s) = \mathbb{E}_\pi[G_t|S_t=s]"> 
-   - For each state <img src="https://render.githubusercontent.com/render/math?math=s">, it yields the expected return(<img src="https://render.githubusercontent.com/render/math?math=G_t">), if the agent start in state s(<img src="https://render.githubusercontent.com/render/math?math=S_t=s">) and then uses policy(<img src="https://render.githubusercontent.com/render/math?math=\pi">) to choose its actions for all time steps.
+   - For each state <img src="https://render.githubusercontent.com/render/math?math=s">, it yields the expected return(<img src="https://render.githubusercontent.com/render/math?math=G_t">) if the agent starts in state s(<img src="https://render.githubusercontent.com/render/math?math=S_t=s">) and then uses policy(<img src="https://render.githubusercontent.com/render/math?math=\pi">) to choose its actions for all time steps.
 
    - Bellman Expectation Equation
-     - Equation to calculate the value of any state is the sum of the immediate reward and the discounted value of the state that follow.
+     - The equation to calculate the value of any state is the sum of the immediate reward and the discounted value of the state that follows.
      - <img src="https://render.githubusercontent.com/render/math?math=v_\pi(s) = \mathbb{E}_\pi[R_{t%2B1} %2B \gamma v_\pi(S_{t%2B1}|S_t = s)]"> 
 
 2. Action-Value Function
 
-   - The value of taking action <img src="https://render.githubusercontent.com/render/math?math=a"> in state <img src="https://render.githubusercontent.com/render/math?math=s"> under a policy <img src="https://render.githubusercontent.com/render/math?math=\pi">
+   - The value of taking action <img src="https://render.githubusercontent.com/render/math?math=a"> in the state <img src="https://render.githubusercontent.com/render/math?math=s"> under a policy <img src="https://render.githubusercontent.com/render/math?math=\pi">
    - <img src="https://render.githubusercontent.com/render/math?math=q_\pi(s, a) = \mathbb{E}_\pi[G_t|S_t=s,A_t=a]"> 
    - <img src="https://render.githubusercontent.com/render/math?math=v_\pi(s) = q_\pi(s, \pi(s))$ if $\pi$ is a deterministic policy and all $s \in \mathcal{S}"> 
 
@@ -127,15 +127,15 @@
 
 ### [Monte Carlo Methods](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/1.%20Foundations%20of%20Reinforcement%20Learning/Lesson%208.%20Monte%20Carlo%20Methods)
 
-- Equiprobable random policy: the agent choose an action in the action set with same probabilities.
+- Equiprobable random policy: the agent chooses an action in the action set with the same probabilities.
 
 - The action-value function with a Q-table
-  - To find optimal policy, the agent tries many episodes.
-  - Q-table is the expected value matrix by states and actions based on results of episodes.
-    - Each episode create a matrix and final Q-table has average values of these matrixes.
+  - To find an optimal policy, the agent tries many episodes.
+  - Q-table is the expected value matrix by states and actions based on the results of episodes.
+    - Each episode creates a matrix, and the final Q-table has average values of these matrixes.
 - MC Prediction
-  - Every-visit MC Prediction: Fill out the Q-table with average value of observations
-  - First-visit MC Prediction: Fill out the Q-table with value of first observation
+  - Every-visit MC Prediction: Fill out the Q-table with the average value of observations
+  - First-visit MC Prediction: Fill out the Q-table with the value of the first observation
 
 #### MC Control
 
@@ -143,7 +143,7 @@
 - MC Control Method: a solution for the control problem
   - Step 1: Using the policy <img src="https://render.githubusercontent.com/render/math?math=\pi"> to construct the Q-table
   - Step 2: improving the policy by changing it to be <img src="https://render.githubusercontent.com/render/math?math=\epsilon">-greedy with respect to the Q-table (<img src="https://render.githubusercontent.com/render/math?math=\pi' \leftarrow \epsilon\text{-greedy}(Q), \pi \leftarrow \pi'">)
-  - Eventually obtain the optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_*">
+  - Eventually, obtain the optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_*">
 
 #### Greedy Policies
 
@@ -154,7 +154,7 @@
   - Iterate these steps
 
 - Epsilon-Greedy Policies
-  - Greedy policy is always selects the greedy action
+  - Greedy policy always selects the greedy action
   - Epsilon-Greedy policy is most likely selects the greedy action
   - Set a specific value <img src="https://render.githubusercontent.com/render/math?math=\epsilon (0\le\epsilon\le1)">
   - <img src="https://render.githubusercontent.com/render/math?math=\epsilon"> is a probability that the agent selects random actions instead of the greedy action
@@ -193,15 +193,15 @@
 ### Temporal-Difference Methods
 
 - Monte Carlo methods need to end the interaction
-  - In the self-driving car, MC methods updates the policy after crash
-- Temporal-Difference methods updates the policy every step
+  - In the self-driving car, MC methods update the policy after the crash
+- Temporal-Difference methods update the policy every step
 - On-policy TD control methods (like Expected Sarsa and Sarsa) have  better online performance than off-policy TD control methods (like  Q-learning). 
 - Expected Sarsa generally achieves better performance than Sarsa.
 
 #### TD Control
 
 - It's similar to MC constant-alpha
-- The value is updated in every step instead of after episode ends
+- The value is updated in every step instead of after the episode ends
   - MC: Update the effect of denotation <img src="https://render.githubusercontent.com/render/math?math=G-Q">, where <img src="https://render.githubusercontent.com/render/math?math=G"> is the cumulated rewards after time <img src="https://render.githubusercontent.com/render/math?math=t">
   - TD (**Sarsa**): Using <img src="https://render.githubusercontent.com/render/math?math=R_{t%2B1} %2B \gamma Q_{t%2B1}"> instead of <img src="https://render.githubusercontent.com/render/math?math=G">
 
@@ -209,7 +209,7 @@
 
 - <img src="https://render.githubusercontent.com/render/math?math=Q(S_t, A_t) \leftarrow Q(S_t, A_t) %2B \alpha(R_{t%2B1} %2B \gamma Q(S_{t%2B1}, A_{t%2B1}) - Q(S_t, A_t))"> 
 
-#### Q-Leraning(Sarsamax)
+#### Q-Learning(Sarsamax)
 
 - In the Sarsa, uses <img src="https://render.githubusercontent.com/render/math?math=Q(S_{t%2B1}, A_{t%2B1})"> to estimate future rewards
 - In the Q-Learning, uses <img src="https://render.githubusercontent.com/render/math?math=max_{a \in \mathcal{A}} Q(S_{t%2B1}, a)">
@@ -217,22 +217,22 @@
 
 #### Expected Sarsa
 
-- Using expected rewards (probability of actions x expected rewards), instead of maximum rewards in the Q-learning
+- Using expected rewards (probability of actions x expected rewards) instead of maximum rewards in the Q-learning
 - <img src="https://render.githubusercontent.com/render/math?math=Q(S_t, A_t) \leftarrow Q(S_t, A_t) %2B \alpha(R_{t%2B1} %2B \gamma \sum_{a \in \mathcal{A}} \pi (a|S_{t%2B1}) Q(S_{t%2B1}, a) - Q(S_t, A_t))"> 
 
 ### Deep Reinforcement Learning
 
-#### Overview Reinforcement Learning in Discrete spaces
+#### Overview of Reinforcement Learning in Discrete spaces
 
 - Finite Markov Decision Processes (MDPs), reinforcement learning environments where the number of states and actions is limited, is possible to represent the action-value function with a table, dictionary, or other finite structure.
 
-- But what about MDPs with much larger spaces?  Consider that the Q-table must have a row for each state.  So, for instance, if there are 10 million possible states, the Q-table must have 10 million rows.  Furthermore, if the state space is the set  of continuous real-valued numbers (an infinite set!), it becomes impossible to represent the action values in a finite structure! 
+- But what about MDPs with much larger spaces?  Consider that the Q-table must have a row for each state. For instance, if there are 10 million possible states, the Q-table must have 10 million rows.  Furthermore, if the state space is the set  of continuous real-valued numbers (an infinite set!), it becomes impossible to represent the action values in a finite structure! 
 
 - Markov Decision Processes (MDPs): <img src="https://render.githubusercontent.com/render/math?math=\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma">
-  - State Trasition and Reward Model: <img src="https://render.githubusercontent.com/render/math?math=\mathbb{P}(S_{t%2B1}, R_{t%2B1}|S_t, A_t)">
+  - State Transition and Reward Model: <img src="https://render.githubusercontent.com/render/math?math=\mathbb{P}(S_{t%2B1}, R_{t%2B1}|S_t, A_t)">
   - State Value Function: <img src="https://render.githubusercontent.com/render/math?math=V(S)">
   - Action Value Function: <img src="https://render.githubusercontent.com/render/math?math=Q(S,A)">
-  - Goal: Find optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_*"> that maximizes total *expected* reward
+  - Goal: Find an optimal policy <img src="https://render.githubusercontent.com/render/math?math=\pi_*"> that maximizes the total *expected* reward
 
 - Reinforcement Learning Algorithms
   - Model-Based Learning (Dynamic Programming)
@@ -255,8 +255,9 @@
   - Non-Uniform Discretization
   - Tile Coding, Coarse Coding
     - Using Multiple Q-tables
-    - Greedy action is the action has maximum average Q-value
-    - Tile Coding using multiple layers by rectangle, Coarse Coding using multiple layers by circle
+    - Greedy action is the action has a maximum average Q-value
+    - Tile Coding using multiple layers by rectangles, Coarse Coding using multiple layers by circles
 - Function Approximation
   - Linear Function Approximation
   - Non-Linear Function Approximation
+
