@@ -253,4 +253,10 @@
 - Discretization
   - Continuous spaces → Discrete spaces
   - Non-Uniform Discretization
+  - Tile Coding, Coarse Coding
+    - Using Multiple Q-tables
+    - Greedy action is the action has maximum average Q-value
+    - Tile Coding using multiple layers by rectangle, Coarse Coding using multiple layers by circle
 - Function Approximation
+  - Linear Function Approximation
+  - Non-Linear Function Approximation
