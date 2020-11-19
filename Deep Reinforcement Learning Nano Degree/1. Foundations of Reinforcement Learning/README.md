@@ -190,7 +190,7 @@
   - if <img src="https://render.githubusercontent.com/render/math?math=\alpha = 0">, then the Q-table is never updated → **Exploitation**
     if <img src="https://render.githubusercontent.com/render/math?math=\alpha = 1">, then the previous result(previous $Q$) is always ignored → **Exploration**
 
-### Temporal-Difference Methods
+### [Temporal-Difference Methods](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/1.%20Foundations%20of%20Reinforcement%20Learning/Lesson%209.%20Temporal-Defference%20Methods)
 
 - Monte Carlo methods need to end the interaction
   - In the self-driving car, MC methods update the policy after the crash
@@ -219,6 +219,8 @@
 
 - Using expected rewards (probability of actions x expected rewards) instead of maximum rewards in the Q-learning
 - <img src="https://render.githubusercontent.com/render/math?math=Q(S_t, A_t) \leftarrow Q(S_t, A_t) %2B \alpha(R_{t%2B1} %2B \gamma \sum_{a \in \mathcal{A}} \pi (a|S_{t%2B1}) Q(S_{t%2B1}, a) - Q(S_t, A_t))"> 
+
+#### [Mini-Project(OpenAI Gym Taxi)](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/1.%20Foundations%20of%20Reinforcement%20Learning/Lesson%2010.%20Solve%20OpenAI%20Gym's%20Taxi-v2%20Task)
 
 ### Deep Reinforcement Learning
 
@@ -251,9 +253,9 @@
 #### Continuous Spaces
 
 - Discretization
-  - Continuous spaces → Discrete spaces
+  - [Continuous spaces → Discrete spaces](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/1.%20Foundations%20of%20Reinforcement%20Learning/Lesson%2011.%20RL%20in%20Continuous%20Spaces/Discretization)
   - Non-Uniform Discretization
-  - Tile Coding, Coarse Coding
+  - [Tile Coding](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/1.%20Foundations%20of%20Reinforcement%20Learning/Lesson%2011.%20RL%20in%20Continuous%20Spaces/Tile%20Coding), Coarse Coding
     - Using Multiple Q-tables
     - Greedy action is the action has a maximum average Q-value
     - Tile Coding using multiple layers by rectangles, Coarse Coding using multiple layers by circles
