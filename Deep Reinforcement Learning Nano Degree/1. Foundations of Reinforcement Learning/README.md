@@ -18,6 +18,8 @@
 
 *Train a car to navigate a steep hill using Q-learning.*
 
+[toc]
+
 ## Foundations of Reinforcement Learning
 
 ### Reinforcement learning(RL)
@@ -202,6 +204,8 @@
 
 - It's similar to MC constant-alpha
 - The value is updated in every step instead of after the episode ends
+- **In the MC, Q-value is updated to sum of future rewards when the episode is ended. But in the TD, Q-value is udpated to sum of current rewards and next Q-value(expected sum of future reward after <img src="https://render.githubusercontent.com/render/math?math=t%2B1">) when every single stemp**
+  - **It means that the agent considers next action's Q-value as the sum of future reward**
   - MC: Update the effect of denotation <img src="https://render.githubusercontent.com/render/math?math=G-Q">, where <img src="https://render.githubusercontent.com/render/math?math=G"> is the cumulated rewards after time <img src="https://render.githubusercontent.com/render/math?math=t">
   - TD (**Sarsa**): Using <img src="https://render.githubusercontent.com/render/math?math=R_{t%2B1} %2B \gamma Q_{t%2B1}"> instead of <img src="https://render.githubusercontent.com/render/math?math=G">
 

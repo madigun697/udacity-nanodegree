@@ -28,4 +28,31 @@
 
 *All of the projects in this Nanodegree program use the rich simulation environments from the [Unity Machine Learning Agents (ML-Agents)](https://blogs.unity3d.com/2017/09/19/introducing-unity-machine-learning-agents/) software development kit (SDK).  You will learn more about ML-Agents in the next concept.*
 
-## Summary
+[toc]
+
+## Deep Q-Networks
+
+Deep Q-Networks is deep learning networks that use states as input and possible actions as output
+
+- Trining Techniques: Experience Replay, Fixed Q-Targets
+- Structure
+  - Steps
+    1. Initialize memory <img src="https://render.githubusercontent.com/render/math?math=D">(replay buffer, finite size <img src="https://render.githubusercontent.com/render/math?math=N">)
+    2. Initialize action-value function <img src="https://render.githubusercontent.com/render/math?math=\hat{q}"> with random weight <img src="https://render.githubusercontent.com/render/math?math=w">
+    3. Initialize target action-value weight <img src="https://render.githubusercontent.com/render/math?math=w^- \leftarrow w">
+    4. Iterate episodes (Sampling and Learning)
+  - Sampling: Run and store interactions between agent and environment
+  - Learning: Select one of stored experience randomly and update <img src="https://render.githubusercontent.com/render/math?math=w">
+
+### Experience Replay
+
+Agent train again with stored interaction between agent and environment
+
+- Replay buffer: Store experience as table of tuple <img src="https://render.githubusercontent.com/render/math?math=(S, A, R, S')">
+- Advantages
+  - Convert reinforcement learning problem into supervised learning problem
+  - Enhance agent training with rare experience
+- To avoid the effect of high correlation between state and action, using random selection when train with replay buffer
+
+### Fixed Q-Targets
+
