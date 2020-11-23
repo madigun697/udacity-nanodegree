@@ -34,7 +34,14 @@
 
 Deep Q-Networks is deep learning networks that use states as input and possible actions as output
 
-- Trining Techniques: Experience Replay, Fixed Q-Targets
+- In the DQN, the next action is determined by greedy action expected maximum reward
+  - In the traditional RL(Q-Learning), the agent can get greedy action by Q-table
+  - In the DQN, greedy action is determined by the nueral network
+- Issues
+  - The high correlation between samples: The next sample(state) is related to previous sample
+  - Non-stationary target: In the RL, the optimal Q is not stable
+
+- Training Techniques (to solve issues): Experience Replay, Fixed Q-Targets
 - Structure
   - Steps
     1. Initialize memory <img src="https://render.githubusercontent.com/render/math?math=D">(replay buffer, finite size <img src="https://render.githubusercontent.com/render/math?math=N">)
@@ -43,6 +50,7 @@ Deep Q-Networks is deep learning networks that use states as input and possible 
     4. Iterate episodes (Sampling and Learning)
   - Sampling: Run and store interactions between agent and environment
   - Learning: Select one of stored experience randomly and update <img src="https://render.githubusercontent.com/render/math?math=w">
+- $\Delta w = \alpha \cdot \overbrace{( \underbrace{R + \gamma \max_a\hat{q}(S',  a, w^-)}_{\rm {TD~target}} - \underbrace{\hat{q}(S, A, w)}_{\rm  {old~value}})}^{\rm {TD~error}} \nabla_w\hat{q}(S, A, w)$
 
 ### Experience Replay
 
@@ -56,3 +64,58 @@ Agent train again with stored interaction between agent and environment
 
 ### Fixed Q-Targets
 
+To avoid non-stationary target issue, uses two network with same structure
+
+- Local network
+  - Use this netwrok when the agent need to get next action
+  - Optimize the weights (minimize MSE loss) using target network as label
+  - <img src="https://render.githubusercontent.com/render/math?math=w"> is the parameter in the local network
+- Target network
+  - Update the network using replay buffer
+  - <img src="https://render.githubusercontent.com/render/math?math=w^-"> is the parameter in the target network
+
+## Extensions to DQN
+
+There are several improvements to the original DQN
+
+- Six major extensions to DQN
+  1. Double DQN
+  2. Prioritized Experience Replay
+  3. Dueling DQN
+  4. [Multi-step bootstrap targets](https://arxiv.org/abs/1602.01783)
+  5. [Distributional DQN](https://arxiv.org/abs/1707.06887)
+  6. [Noisy DQN](https://arxiv.org/abs/1706.10295)
+
+### Double DQN
+
+- Seperate the selection and evaluation(TD target)
+  - The DQN does the selection(to select an action to obtain maximum reward in the next state) and evaluation(to calculate the extimated sum of future rewards, <img src="https://render.githubusercontent.com/render/math?math=Q">) with single model
+  - The D-DQN seperate these two process to avoid overestimation and error of noises
+- Selection uses local network(<img src="https://render.githubusercontent.com/render/math?math=w">) and Evaluation uses target netwrok(<img src="https://render.githubusercontent.com/render/math?math=w^-">)
+- $\Delta w = \alpha \cdot \overbrace{( \underbrace{R + \gamma \hat{q} ( S', \arg max_a\hat{q}(S',  a, w), w^-)}_{\rm {TD~target}} - \underbrace{\hat{q}(S, A, w)}_{\rm  {old~value}})}^{\rm {TD~error}} \nabla_w\hat{q}(S, A, w)$
+
+### Prioritized Experience Replay
+
+- To overcome the shortcomings of the original experience replay
+  - Because samples to train the model are selected uniformly, some experiences have a very small chance of getting selected
+  - If the train period is long, some old experiences got lost chance to select, because the memory size is limited
+- Add the priority in the each experience
+  - TD error, the difference between the target <img src="https://render.githubusercontent.com/render/math?math=Q"> and expected <img src="https://render.githubusercontent.com/render/math?math=Q"> is used the basement of priority
+  - The priority is the sum of TD error and small <img src="https://render.githubusercontent.com/render/math?math=\epsilon">. To avoid the non-selected situation, although the TD error is zero
+- Sampling probability
+  - <img src="https://render.githubusercontent.com/render/math?math=\alpha">: The control value between prioritized selection and uniform selection
+    - <img src="https://render.githubusercontent.com/render/math?math=P(i) = {p^ \alpha_i} \over {\sum_k P^ \alpha_k}"> 
+  - <img src="https://render.githubusercontent.com/render/math?math=\beta">: To adjust bias according the non-uniform random sampling
+    - <img src="https://render.githubusercontent.com/render/math?math=w_i = ({1} \over {N} {1} \over {P(i)})^ \beta"> 
+
+### Dueling DQN
+
+![image](https://user-images.githubusercontent.com/8471958/99925590-9990a280-2cf3-11eb-869e-26f67c5c238c.png)
+
+- Seperates Q-value into state value and advantage value
+  - <img src="https://render.githubusercontent.com/render/math?math=Q(s, a) = V(s) %2B A(a, s)"> 
+  - Advantage value means that how much better selecting a specific action than other actions
+
+### Rainbow
+
+- Rainbow DQN is combined six extension to DQN
