@@ -30,7 +30,7 @@
 
 [toc]
 
-## Deep Q-Networks
+## [Deep Q-Networks](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/2.%20Value-Based%20Methods/Lesson%202.%20Deep%20Q-Networks)
 
 Deep Q-Networks is deep learning networks that use states as input and possible actions as output
 
