@@ -110,3 +110,20 @@ Policy Gradient Methods is one of the Policy-Based Methods that estimate the wei
 - The action at timestamp <img src="https://render.githubusercontent.com/render/math?math=t"> can only affect the future rewards, so the past rewards shouldn't be contributing to the policy gradient
 - <img src="https://render.githubusercontent.com/render/math?math=g = \Sigma_t R \nabla_\theta log \pi_\theta(a_t|s_t) = \Sigma_t (R_t^{past} %2B R_t^{future}) \nabla_\theta log \pi_\theta(a_t|s_t)"> → <img src="https://render.githubusercontent.com/render/math?math=g = \Sigma_t R_t^{future} \nabla_\theta log \pi_\theta(a_t|s_t)">
 
+### Importance Sampling
+
+- Reuse the trajectories after update policy(<img src="https://render.githubusercontent.com/render/math?math=\pi_\theta \rightarrow \pi_{\theta^`}">)
+
+- The sampling probability under new policy describes with sampling probability under old policy
+
+### Proximal Policy Optimization (PPO)
+
+- The Surrogate Function
+
+- Clipping Policy Updates
+
+  - To stop update, flatten the surrogate function using the clip the surrogate function within interval <img src="https://render.githubusercontent.com/render/math?math=[1-\epsilon, 1 %2B \epsilon]">
+  - We want to clip only the top part
+    ![img](https://video.udacity-data.com/topher/2018/September/5b9a9d58_clipped-surrogate-explained/clipped-surrogate-explained.png)
+
+  
