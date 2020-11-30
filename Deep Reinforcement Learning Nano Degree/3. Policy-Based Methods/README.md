@@ -37,8 +37,8 @@
 - Stochastic Policies
   - Unlike value-based methods, policy-based methods can learn true stochastic policies
   - Policy
-    - Deterministic: $\pi: s \rightarrow a$
-    - Stochastic: $a \sim \pi(s, a) = \mathbb{P}[a|s]$
+    - Deterministic: <img src="https://render.githubusercontent.com/render/math?math=\pi: s \rightarrow a">
+    - Stochastic: <img src="https://render.githubusercontent.com/render/math?math=a \sim \pi(s, a) = \mathbb{P}[a|s]">
   - Aliased State
     - Some states are exactly same, but the agent need to act different action
       ![image](https://user-images.githubusercontent.com/8471958/100534077-4077b180-31c0-11eb-8345-23d1c0b93773.png)
@@ -53,12 +53,12 @@
 ### Black-Box Optimization
 
 - Gradient Ascent (Hill Climbing)
-  - The nueral network for policy-based methods is represented a equation $J(\theta) = \Sigma_{\tau} P(\tau;\theta)R(\tau)$
-    - There is $\theta$ to maximize expected return $J$
-    - To obtain the optimal policy, adjust $\theta$ toward for high return
+  - The nueral network for policy-based methods is represented a equation <img src="https://render.githubusercontent.com/render/math?math=J(\theta) = \Sigma_{\tau} P(\tau">;<img src="https://render.githubusercontent.com/render/math?math=\theta)R(\tau)">
+    - There is <img src="https://render.githubusercontent.com/render/math?math=\theta"> to maximize expected return <img src="https://render.githubusercontent.com/render/math?math=J">
+    - To obtain the optimal policy, adjust <img src="https://render.githubusercontent.com/render/math?math=\theta"> toward for high return
 
 - Steepest Ascent Hill Climbing
-  - Simulated Annealing: Search some candidates from arbitrary policy $\pi$ and choose the best next policy
+  - Simulated Annealing: Search some candidates from arbitrary policy <img src="https://render.githubusercontent.com/render/math?math=\pi"> and choose the best next policy
   - Adaptive Noise Scaling: Change noisy radius following whether the next policy is better or not
     - If next policy is better, noisy radius decrease
     - If next policy is worse, noisy radius increase (to avoid local maxima)
@@ -67,3 +67,46 @@
   - Instead of selecting the best option in the steepest ascent hill climbing, take the average of 10 or 20 percent of policies
 - Evolution Strategies
   - Instead of selecting the best option in the steepest ascent hill climbing, take the weighted sum of every policies
+
+## Policy Gradient Methods
+
+Policy Gradient Methods is one of the Policy-Based Methods that estimate the weights of an optimal policy through gradient ascent.
+
+- Basic Concept (Big Picture)
+  - Loop
+    - Collect an episode
+    - Change the weigth of the policy network
+      - if Won, increase the probability of each (state, action) pair
+      - if Lost, decrease the probability of each (state, action) pair
+
+- Trajectory(<img src="https://render.githubusercontent.com/render/math?math=\tau">): state-action sequence
+  - <img src="https://render.githubusercontent.com/render/math?math=\tau = (s_0, a_0, s_1, a_1, s_2, \cdots, s_H, a_H, s_{H%2B1})"> 
+  - <img src="https://render.githubusercontent.com/render/math?math=R(\tau) = r_1%2Br_2%2B\cdots%2Br_H%2Br_{H%2B1}"> 
+  - Goal is to maximize expected return(<img src="https://render.githubusercontent.com/render/math?math=U(\theta)">): <img src="https://render.githubusercontent.com/render/math?math=max_{\theta} U(\theta)">
+  - <img src="https://render.githubusercontent.com/render/math?math=U(\theta) = \Sigma_\tau P(\tau">;<img src="https://render.githubusercontent.com/render/math?math=\theta)R(\tau)">
+- Gradient Ascent
+  - <img src="https://render.githubusercontent.com/render/math?math=\theta \leftarrow \theta %2B \alpha\nabla_\theta U(\theta)"> 
+  - However, calculation exact gradient (<img src="https://render.githubusercontent.com/render/math?math=\nabla_\theta U(\theta)">) with every possible trajectory is so expensive
+    → Instead of, Estimation the gradient with a few trajectories
+
+## Proximal Policy Optimization
+
+### Main problem of REINFORCE
+
+1. The update process is very **inefficient**! We run the policy once, update once, and then throw away the trajectory.
+2. The gradient estimate <img src="https://render.githubusercontent.com/render/math?math=g"> is very **noisy**. By chance the collected trajectory may not be representative of the policy.
+3. There is no clear **credit assignment**. A  trajectory may contain many good/bad actions and whether these actions  are reinforced depends only on the final total output.
+
+### Noise Reduction
+
+- The easiest option to reduce the noise in the gradient is to simply  sample more trajectories! Using distributed computing, we can collect  multiple trajectories in parallel, so that it won’t take too much time. 
+
+### Rewards Normalization
+
+- Learning can be improved if we normalize the rewards, where <img src="https://render.githubusercontent.com/render/math?math=\mu"> is the mean, and <img src="https://render.githubusercontent.com/render/math?math=\sigma"> the standard deviation.
+
+### Credit Assignment
+
+- The action at timestamp <img src="https://render.githubusercontent.com/render/math?math=t"> can only affect the future rewards, so the past rewards shouldn't be contributing to the policy gradient
+- <img src="https://render.githubusercontent.com/render/math?math=g = \Sigma_t R \nabla_\theta log \pi_\theta(a_t|s_t) = \Sigma_t (R_t^{past} %2B R_t^{future}) \nabla_\theta log \pi_\theta(a_t|s_t)"> → <img src="https://render.githubusercontent.com/render/math?math=g = \Sigma_t R_t^{future} \nabla_\theta log \pi_\theta(a_t|s_t)">
+
