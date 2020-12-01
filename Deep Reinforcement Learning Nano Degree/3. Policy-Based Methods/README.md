@@ -119,11 +119,81 @@ Policy Gradient Methods is one of the Policy-Based Methods that estimate the wei
 ### Proximal Policy Optimization (PPO)
 
 - The Surrogate Function
-
 - Clipping Policy Updates
-
   - To stop update, flatten the surrogate function using the clip the surrogate function within interval <img src="https://render.githubusercontent.com/render/math?math=[1-\epsilon, 1 %2B \epsilon]">
   - We want to clip only the top part
     ![img](https://video.udacity-data.com/topher/2018/September/5b9a9d58_clipped-surrogate-explained/clipped-surrogate-explained.png)
 
-  
+## Actor-Critic Methods
+
+### Motivation and Fundamental
+
+- Actor-Critic Methods is intersection of value-based methods and policy-based methods
+  - Value-based Methods approximates value functions (using Deep Neural Networks)
+    - <img src="https://render.githubusercontent.com/render/math?math=V_\pi(S)">(Value function), <img src="https://render.githubusercontent.com/render/math?math=Q_\pi(s, a)">(Action-Value function), <img src="https://render.githubusercontent.com/render/math?math=A_\pi(s, a)">(Advantage function)
+  - Policy-based Methods approximates a policy (using Deep Neural Networks)
+    - Policy-based Methods parameterizes the policy
+    - <img src="https://render.githubusercontent.com/render/math?math=\pi(a|s)">(Stochastic; return probability of actions), <img src="https://render.githubusercontent.com/render/math?math=\pi(s)">(Deterministic; return a specific action)
+- AC Methods uses value-based technique to further reduce the variance of policy-based methods
+- Bias vs. Variance
+  - Bias: How far outputs (or center of outputs) from the target
+  - Variance: How sparse the outputs
+
+### Estimated Methods
+
+1. Monte-Carlo estimate (MC)
+   - High variance and Unbiased
+   - The average of rewards by episode (No estimate the future rewards)
+2. Temporal-Difference estimate (TD)
+   - Low variance and Low bais
+   - Sum of current reward and estimated future rewards
+
+### Actor-Critic Methods
+
+- AC Methods consist of two parts (Nueral Networks)
+  - Actor: Policy-based Methods
+  - Critic: Value-based Methods (TD estimate)
+- On-policy vs. Off-policy
+  - On-policy(i.e., Salsa): Train with actions following the policy
+  - Off-policy(i.e., Q-Learning): Train with actions or others regardless of the policy
+- A3C (Asyncronous Advantage Actor-Critic)
+  - N-step Bootstrapping
+    - Insted of TD estimate, uses N-step Bootstrapping
+    - Bootstrapping means that replace future rewards to estimated rewards like TD
+    - TD is one-step bootstapping(uses one next rewards and future rewards), MC is infinite-step bootstrapping
+  - Parallel training
+    - Instead of replay buffer(independent sampling), use parallel training
+- A2C (Advantage Actor-Critic)
+  - A3C updates the global network asynchronous
+  - The each agent in the A3C is A2C
+- GAE (Generalized Advantage Estimation)
+  - To express the each n-step bootstraping by <img src="https://render.githubusercontent.com/render/math?math=\lambda">
+    - One-step bootstrapping: <img src="https://render.githubusercontent.com/render/math?math=1-\lambda">
+    - Two-step bootstrapping: <img src="https://render.githubusercontent.com/render/math?math=(1-\lambda)\lambda">
+    - Three-step bootstrapping: <img src="https://render.githubusercontent.com/render/math?math=(1-\lambda)\lambda^2">
+    - Infinite-step bootstrapping: <img src="https://render.githubusercontent.com/render/math?math=\lambda^{T-t-1}">
+  - <img src="https://render.githubusercontent.com/render/math?math=\lambda=0"> means that One-step bootstrapping, <img src="https://render.githubusercontent.com/render/math?math=\lambda=1"> means that Infinite-step bootstrapping
+- DDPG (Deep Deterministic Policy Gradient)
+  - Solve the issue that DQN cannot apply the environment with continuous action space
+  - Soft Updates
+    - In the DQN, the target networks weights are updated to the weights of regular(local) networks by every update period
+    - In the DDPG, ther target networks weights are updated to mix of target and regular networks weights by everytime
+      - For example, if the interpolation parameter(<img src="https://render.githubusercontent.com/render/math?math=\tau">) is 0.01, the target networks weigths are updated mix in 0.01% regular networks weights and 99.99% target networks weights
+
+
+
+
+
+## References
+
+https://www.slideshare.net/WoongwonLee/trpo-87165690
+
+https://geonhee-lee.github.io/CS294-5.html
+
+https://www.slideshare.net/RLKorea/pg-travel-guide-for-everyone
+
+https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/
+
+https://github.com/reinforcement-learning-kr/pg_travel
+
+https://www.slideshare.net/WoongwonLee/rlcode-a3c
