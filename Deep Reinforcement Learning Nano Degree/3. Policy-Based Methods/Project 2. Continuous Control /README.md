@@ -1,4 +1,4 @@
-[//]: # (Image References)
+[//]: # "Image References"
 
 [image1]: https://user-images.githubusercontent.com/10624937/43851024-320ba930-9aff-11e8-8493-ee547c6af349.gif "Trained Agent"
 [image2]: https://user-images.githubusercontent.com/10624937/43851646-d899bf20-9b00-11e8-858c-29b5c2c94ccc.png "Crawler"
@@ -60,29 +60,146 @@ The environment is considered solved, when the average (over 100 episodes) of th
 
     (_For AWS_) If you'd like to train the agent on AWS (and have not [enabled a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md)), then please use [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/one_agent/Reacher_Linux_NoVis.zip) (version 1) or [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux_NoVis.zip) (version 2) to obtain the "headless" version of the environment.  You will **not** be able to watch the agent without enabling a virtual screen, but you will be able to train the agent.  (_To watch the agent, you should follow the instructions to [enable a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md), and then download the environment for the **Linux** operating system above._)
 
-2. Place the file in the DRLND GitHub repository, in the `p2_continuous-control/` folder, and unzip (or decompress) the file. 
+2. Place the file in the same folder other files placed , and unzip (or decompress) the file. 
 
 ### Instructions
 
-Follow the instructions in `Continuous_Control.ipynb` to get started with training your own agent!  
+Follow the instructions in `Continuous_Control.ipynb` to get started with training your own agent!
+
+1. Download and unzip environment file
+
+2. Set up environment
+
+   ```python
+   # file_name is unziped environment file path
+   env = UnityEnvironment(file_name='./Reacher_Linux/Reacher.x86_64')
+   ```
+
+3. Run codes for initialize agent
+
+   - Get default brain
+
+     ```python
+     brain_name = env.brain_names[0]
+     brain = env.brains[brain_name]
+     ```
+
+   - Get the number of agents, action size, state size
+
+     ```python
+     # reset the environment
+     env_info = env.reset(train_mode=True)[brain_name]
+     
+     # number of agents
+     num_agents = len(env_info.agents)
+     
+     # size of each action
+     action_size = brain.vector_action_space_size
+     
+     # examine the state space 
+     states = env_info.vector_observations
+     state_size = states.shape[1]
+     ```
+
+   - Initialize agent
+
+     ```python
+     # initialize agent with hidden layer's dimensions and random seed
+     agent = Agent(state_size, action_size, hidden_dims, random_seed)
+     ```
+
+4. Run agent
+
+   ```python
+   mean_scores = []                               # list of mean scores from each episode
+   min_scores = []                                # list of lowest scores from each episode
+   max_scores = []                                # list of highest scores from each episode
+   scores_window = deque(maxlen=100)              # mean scores from most recent episodes
+   moving_avgs = []                               # list of moving averages
+   for i_episode in range(1, 201):								 # run episode 1~201 (200 episodes)
+       env_info = env.reset(train_mode=True)[brain_name]
+       states = env_info.vector_observations
+       score = np.zeros(num_agents)
+       agent.reset()
+       start_time = time.time()
+       for t in range(1000):
+           actions = agent.act(states)
+          
+           env_info = env.step(actions)[brain_name]
+           next_states = env_info.vector_observations
+           rewards = env_info.rewards
+           dones = env_info.local_done
+           
+           for state, action, reward, next_state, done in zip(states, actions, rewards, next_states, dones):
+               agent.step(state, action, reward, next_state, done, t)
+               
+           states = next_states
+           score += rewards
+           if np.any(dones):
+               break
+           
+       agent.save_model_params()
+           
+       duration = time.time() - start_time
+       min_scores.append(np.min(score))              # save lowest score for a single agent
+       max_scores.append(np.max(score))              # save highest score for a single agent        
+       mean_scores.append(np.mean(score))            # save mean score for the episode
+       scores_window.append(mean_scores[-1])         # save mean score to window
+       moving_avgs.append(np.mean(scores_window))    # save moving average
+       
+       print('\rEpisode {} ({} sec)  -- \tMin: {:.1f}\tMax: {:.1f}\tMean: {:.1f}\tMov. Avg: {:.1f}'.format(\
+             i_episode, round(duration), min_scores[-1], max_scores[-1], mean_scores[-1], moving_avgs[-1]))
+   ```
+
+5. Check result
+
+   - Print each episode result
+
+     ```
+     Episode 1 (91 sec)  -- 	Min: 0.0	Max: 1.9	Mean: 0.7	Mov. Avg: 0.7
+     Episode 2 (94 sec)  -- 	Min: 0.0	Max: 3.9	Mean: 1.7	Mov. Avg: 1.2
+     Episode 3 (95 sec)  -- 	Min: 1.9	Max: 6.1	Mean: 3.7	Mov. Avg: 2.0
+     ...
+     Episode 198 (143 sec)  -- 	Min: 11.5	Max: 32.3	Mean: 26.1	Mov. Avg: 33.9
+     Episode 199 (144 sec)  -- 	Min: 10.9	Max: 30.7	Mean: 23.1	Mov. Avg: 33.8
+     Episode 200 (142 sec)  -- 	Min: 17.8	Max: 31.4	Mean: 25.5	Mov. Avg: 33.7
+     ```
+
+   - Show the chart of result
+
+     ```python
+     fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(25, 10))
+     ax.plot(np.arange(1, len(mean_scores)+1), mean_scores)
+     ax.set_ylabel('Score')
+     ax.set_xlabel('Episode #')
+     ```
+
+     ![image](https://user-images.githubusercontent.com/8471958/101865766-05fd0580-3b2c-11eb-8d7a-060e2b4f1e99.png)
 
 #### Agent
 
-- DDPG model
-- Parameters
+- **Algorithm**: Deep Deterministic Policy Gradients(DDPG) algorithm
+  - DDPG algorithm apply the advantages of DQN algorithm into the Actor-Critifc approach
+    - Replay Buffer: Reduce the correlation between samples
+    - Target Q Network: Be stable network during update
+  - Actor and Critic Network Structure
+    ![image](https://user-images.githubusercontent.com/8471958/101945108-91b17900-3ba2-11eb-9325-1d5f89db713c.png)
+  - DDPG Algorithm Structure
+    ![image](https://user-images.githubusercontent.com/8471958/101946027-6e3afe00-3ba3-11eb-8e76-d246a8e2bb39.png)
+- **Parameters**
   - `state_size`: The number of states
   - `action-size`: The number of actions
   - `hidden_dims`: The dimension of each hidden layers
   - `random_seed`: Random seed
-- Inherent Variables
-  - `BUFFER_SIZE`: Replay Buffer Size
-  - `BATCH_SIZE`: Mini-batch Size
-  - `GAMMA`: Discount Factor
-  - `TARGET_NETWORK_MIX`: the ratio of target parameter for soft update
-  - `UPDATE_ITER`: Learning Interval
-  - `LEARN_NUM`: The number of learning passes
-  - `OU_SIGMA`: Ornstein-Uhlenbeck noise parameter
-  - `OU_TEHTA`: Ornstein-Uhlenbeck noise parameter
+- **Inherent Variables**(with value)
+  - `BUFFER_SIZE`(1,000,000): Replay Buffer Size 
+  - `BATCH_SIZE`(128): Mini-batch Size
+  - `GAMMA`(0.99): Discount Factor
+  - `TARGET_NETWORK_MIX`(0.001): the ratio of target parameter for soft update
+  - `UPDATE_ITER`(20): Learning Interval
+  - `LEARN_NUM`(10): The number of learning passes
+  - `OU_SIGMA`(0.2): Ornstein-Uhlenbeck noise parameter
+  - `OU_TEHTA`(0.15): Ornstein-Uhlenbeck noise parameter
 
 #### Run Agents
 

@@ -15,21 +15,28 @@
 
 #### Agent
 
-- DDPG model
-- Parameters
+- **Algorithm**: Deep Deterministic Policy Gradients(DDPG) algorithm
+  - DDPG algorithm apply the advantages of DQN algorithm into the Actor-Critifc approach
+    - Replay Buffer: Reduce the correlation between samples
+    - Target Q Network: Be stable network during update
+  - Actor and Critic Network Structure
+    ![image](https://user-images.githubusercontent.com/8471958/101945108-91b17900-3ba2-11eb-9325-1d5f89db713c.png)
+  - DDPG Algorithm Structure
+    ![image](https://user-images.githubusercontent.com/8471958/101946027-6e3afe00-3ba3-11eb-8e76-d246a8e2bb39.png)
+- **Parameters**
   - `state_size`: The number of states
   - `action-size`: The number of actions
   - `hidden_dims`: The dimension of each hidden layers
   - `random_seed`: Random seed
-- Inherent Variables
-  - `BUFFER_SIZE`: Replay Buffer Size
-  - `BATCH_SIZE`: Mini-batch Size
-  - `GAMMA`: Discount Factor
-  - `TARGET_NETWORK_MIX`: the ratio of target parameter for soft update
-  - `UPDATE_ITER`: Learning Interval
-  - `LEARN_NUM`: The number of learning passes
-  - `OU_SIGMA`: Ornstein-Uhlenbeck noise parameter
-  - `OU_TEHTA`: Ornstein-Uhlenbeck noise parameter
+- **Inherent Variables**(with value)
+  - `BUFFER_SIZE`(1,000,000): Replay Buffer Size 
+  - `BATCH_SIZE`(128): Mini-batch Size
+  - `GAMMA`(0.99): Discount Factor
+  - `TARGET_NETWORK_MIX`(0.001): the ratio of target parameter for soft update
+  - `UPDATE_ITER`(20): Learning Interval
+  - `LEARN_NUM`(10): The number of learning passes
+  - `OU_SIGMA`(0.2): Ornstein-Uhlenbeck noise parameter
+  - `OU_TEHTA`(0.15): Ornstein-Uhlenbeck noise parameter
 
 #### Run Agents
 
@@ -247,4 +254,9 @@ Episode 200 (142 sec)  -- 	Min: 17.8	Max: 31.4	Mean: 25.5	Mov. Avg: 33.7
 
 ![image](https://user-images.githubusercontent.com/8471958/101865766-05fd0580-3b2c-11eb-8d7a-060e2b4f1e99.png)
 
+#### Future ideas for improving the agent's performance
 
+1. Using the Prioritized Experince Replay(PER) instead of Replay Buffer
+   - In the previous project(Navigation), there were always better results when use PER instead of Replay Buffer
+
+2. Using different algorithms like [Trust Region Policy Optimization(TRPO) algorithm](https://arxiv.org/pdf/1502.05477.pdf) or [Proximal Policy Optimization(PPO) algorithm](https://arxiv.org/pdf/1707.06347.pdf)
