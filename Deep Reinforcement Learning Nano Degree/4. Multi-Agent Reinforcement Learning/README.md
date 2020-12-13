@@ -20,4 +20,29 @@
 
 *In Project 3, you will train a pair of agents to play tennis. ([Source](https://blogs.unity3d.com/2017/09/19/introducing-unity-machine-learning-agents/))*
 
-## Summary
+[toc]
+
+## Multi-Agent Systems
+
+- Multi-Agent System
+  - Introduction
+    - There are several agents in the same environment
+    - The agents interact with not only environment but also other agents' actions
+  - Motivations
+    - We live in a multi-agent world
+    - Intelligent agents have to interact with humnas
+    - Agents need to work in complex environments
+  - Benefits
+    - Agents can share their experience(knowledge) with other agents
+    - Robust: When one agent failed, another agent can take over the tasks
+- Multi-Agent Reinforcement Learning (MARL)
+  - Agents train without considering other agents
+    - Other agents are just part of environment(state)
+    - Non-Stationarity environment: each agent recognizes state differently, according to other agents' action
+  - The matter agent approach
+    - With single policy, return action vector for each agent
+  - Multi-Agent Environment
+    - Cooperation: Maximize rewards of each agent
+    - Competition: Maximize their own rewards (One agent take, the others lose)
+    - Mixed Environment
+

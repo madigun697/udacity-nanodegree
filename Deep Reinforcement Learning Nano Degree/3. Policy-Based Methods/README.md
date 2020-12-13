@@ -20,6 +20,8 @@
 
 *In Project 2, you will train a robotic arm to reach target locations.*
 
+[toc]
+
 ## Policy-Based Methods
 
 ### Recap of Value-Based Methods
