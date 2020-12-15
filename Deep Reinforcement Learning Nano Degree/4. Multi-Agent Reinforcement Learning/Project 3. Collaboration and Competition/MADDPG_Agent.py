@@ -43,6 +43,7 @@ class MADDPG_Agent():
         self.state_size = state_size
         self.action_size = action_size
         self.num_agents = num_agents
+        self.per_flag = per_flag
         self.seed = random.seed(random_seed)
         
         self.agents = [DDPG_Agent('Agent%d' % (i+1), state_size, action_size, hidden_dims, random_seed, num_agents) for i in range(num_agents)]
@@ -51,7 +52,7 @@ class MADDPG_Agent():
         else:
             self.memory = ReplayBuffer(BUFFER_SIZE, BATCH_SIZE, random_seed)
         
-    def step(self, states, actions, rewards, next_states, dones, t_step, completion):
+    def step(self, states, actions, rewards, next_states, dones, t_step, completion=0):
         """Save experience in replay memory, and use sample from buffer to learn."""
         # Save experience / reward
         self.memory.add(states, actions, rewards, next_states, dones)
@@ -61,7 +62,10 @@ class MADDPG_Agent():
             for _ in range(LEARN_NUM):
                 # Update by Agent
                 for agent in self.agents:
-                    experiences = self.memory.sample(completion)
+                    if self.per_flag:
+                        experiences = self.memory.sample(completion)
+                    else:
+                        experiences = self.memory.sample()
                     self.learn(experiences, agent)
     
     def act(self, states):
@@ -74,7 +78,10 @@ class MADDPG_Agent():
     
     def learn(self, experiences, agent):
         
-        states, actions, rewards, next_states, dones, sample_indices, weights = experiences
+        if self.per_flag:
+            states, actions, rewards, next_states, dones, sample_indices, weights = experiences
+        else:
+            states, actions, rewards, next_states, dones = experiences
         
         indices = [torch.tensor(np.arange(i, BATCH_SIZE*self.num_agents, self.num_agents)).to(device) for i in range(self.num_agents)]
         
@@ -83,7 +90,7 @@ class MADDPG_Agent():
         agent_next_states = [next_states.index_select(0, ind) for ind in indices]
         
         all_states=torch.cat(agent_states, dim=1).to(device)
-        all_actions=torch.cat(agent_actions, dim=1).to(device)
+        all_actions=torch.cat(agent_actions, dim=1).float().to(device)
         all_next_states=torch.cat(agent_next_states, dim=1).to(device)
              
         # ---------------------------- update critic ---------------------------- #
@@ -93,7 +100,6 @@ class MADDPG_Agent():
         exp_q_values = agent.critic_target(torch.cat([all_next_states, all_next_actions], dim=1))
         # Compute Q targets for current states (y_i)
         exp_q_values = rewards + (GAMMA * exp_q_values * (1 - dones))
-        
         # Compute critic loss
         q_values = agent.critic_local(torch.cat([all_states, all_actions], dim=1))
         critic_loss = (q_values - exp_q_values).pow(2).mul(.5).sum(-1).mean()
@@ -121,7 +127,8 @@ class MADDPG_Agent():
         agent.noise.reset()
         
         # ---------------------------- update priority ------------------------- #
-        self.memory.update_priorities(sample_indices, (q_values - exp_q_values).abs().detach().cpu().numpy() + P_EPS)
+        if self.per_flag:
+            self.memory.update_priorities(sample_indices, (q_values - exp_q_values).abs().detach().cpu().numpy() + P_EPS)
     
     def save_model_params(self):
         for agent in self.agents:
