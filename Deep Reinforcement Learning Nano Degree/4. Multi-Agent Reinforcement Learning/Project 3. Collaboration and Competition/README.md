@@ -188,13 +188,13 @@ Follow the instructions in `Tennis.ipynb` to get started with training your own 
    - Print each 100 episode result
 
      ```python
-     Episode 100 (32 sec) 	 -- Average Score: 0.00	Max Score: 0.000.00
-     Episode 200 (35 sec) 	 -- Average Score: 0.00	Max Score: 0.100.00
-     Episode 300 (34 sec) 	 -- Average Score: 0.00	Max Score: 0.100.00
+     Episode 100 (32 sec) 	 -- Average Score: 0.00	Max Score: 0.00
+     Episode 200 (35 sec) 	 -- Average Score: 0.00	Max Score: 0.10
+     Episode 300 (34 sec) 	 -- Average Score: 0.00	Max Score: 0.10
      ...
-     Episode 3000 (200 sec) 	 -- Average Score: 0.23	Max Score: 1.500.10
-     Episode 3100 (278 sec) 	 -- Average Score: 0.32	Max Score: 1.800.80
-     Episode 3152 (266 sec) 	 -- Average Score: 0.51	Max Score: 2.602.60
+     Episode 3000 (200 sec) 	 -- Average Score: 0.23	Max Score: 1.50
+     Episode 3100 (278 sec) 	 -- Average Score: 0.32	Max Score: 1.80
+     Episode 3152 (266 sec) 	 -- Average Score: 0.51	Max Score: 2.60
      ```
 
    - Show the chart of result
