@@ -46,3 +46,21 @@
     - Competition: Maximize their own rewards (One agent take, the others lose)
     - Mixed Environment
 
+## AlphaZero
+
+### Zero-Sum Game
+
+- Compete two agents (If one win, other must lose)
+
+### Monte Carlo Tree Search (MCTS)
+
+- MCTS in Zero-Sum Game
+  - Initialize top-node for current state, loop over actions for some $N_{tot}$:
+    1. Start from the top-node, repeatedly pick the child-node with the alrgets $U$
+    2. If $N = 0$ for the node, play a random game.
+       Else, expand node, play a random game from a randomly selected child
+    3. Update statistics, back-propagate and update $N$ and $U$ as neede
+  - Select move with highest visit counts
+
+
+

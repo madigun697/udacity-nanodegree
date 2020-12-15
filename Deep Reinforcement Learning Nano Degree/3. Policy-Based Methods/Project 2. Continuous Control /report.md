@@ -20,7 +20,9 @@
     - Replay Buffer: Reduce the correlation between samples
     - Target Q Network: Be stable network during update
   - Actor and Critic Network Structure
-    ![image](https://user-images.githubusercontent.com/8471958/101945108-91b17900-3ba2-11eb-9325-1d5f89db713c.png)
+    ![image](https://user-images.githubusercontent.com/8471958/102170550-7d42da00-3e49-11eb-929d-a6ba8688088f.png)
+    - Actor's input layer dimension is state size(33)
+    - Critic's input layer dimension is sum of state size(33) and action size(4)
   - DDPG Algorithm Structure
     ![image](https://user-images.githubusercontent.com/8471958/101946027-6e3afe00-3ba3-11eb-8e76-d246a8e2bb39.png)
 - **Parameters**
