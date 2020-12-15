@@ -1,12 +1,19 @@
 import numpy as np
 import random
 import copy
+import os
 from collections import namedtuple, deque
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
+
+from DDPG_Net import Net
+from Replay_Buffer import ReplayBuffer
+
+ACTOR_LR = 1e-4
+CRITIC_LR = 1e-3
 
 BUFFER_SIZE = int(1e6)      # replay buffer size
 BATCH_SIZE = 128            # minibatch size
@@ -19,36 +26,39 @@ OU_THETA = 0.15             # Ornstein-Uhlenbeck noise parameter
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-class Agent():
+class DDPG_Agent():
     """Interacts with and learns from the environment."""
 
-    def __init__(self, state_size, action_size, hidden_dims, random_seed):
+    def __init__(self, agent_name, state_size, action_size, hidden_dims, random_seed, num_agents=1):
         """Initialize an Agent object.
 
         Params
         ======
+            agent_name (str): the name of agent
             state_size (int): dimension of each state
             action_size (int): dimension of each action
             hidden_dims (array): array of dimensions of each hidden layer
             random_seed (int): random seed
         """
+        self.agent_name = agent_name
         self.state_size = state_size
         self.action_size = action_size
+        self.num_agents = num_agents
         self.seed = random.seed(random_seed)
 
         # Actor Network (w/ Target Network)
-        self.actor_local = DDPG_Net(state_size, action_size, hidden_dims).to(device)
-        self.actor_target = DDPG_Net(state_size, action_size, hidden_dims).to(device)
-        self.actor_optimizer = optim.Adam(self.actor_local.parameters(), lr=1e-4)
+        self.actor_local = Net(state_size, action_size, hidden_dims).to(device)
+        self.actor_target = Net(state_size, action_size, hidden_dims).to(device)
+        self.actor_optimizer = optim.Adam(self.actor_local.parameters(), lr=ACTOR_LR)
         
         # Make sure the Actor Target Network has the same weight values as the Local Network
         for target, local in zip(self.actor_target.parameters(), self.actor_local.parameters()):
             target.data.copy_(local.data)
 
         # Critic Network (w/ Target Network)
-        self.critic_local = DDPG_Net(state_size+action_size, 1, hidden_dims).to(device)
-        self.critic_target = DDPG_Net(state_size+action_size, 1, hidden_dims).to(device)
-        self.critic_optimizer = optim.Adam(self.critic_local.parameters(), lr=1e-3)
+        self.critic_local = Net((state_size+action_size)*num_agents, 1, hidden_dims).to(device)
+        self.critic_target = Net((state_size+action_size)*num_agents, 1, hidden_dims).to(device)
+        self.critic_optimizer = optim.Adam(self.critic_local.parameters(), lr=CRITIC_LR)
         
         # Make sure the Critic Target Network has the same weight values as the Local Network
         for target, local in zip(self.critic_target.parameters(), self.critic_local.parameters()):
@@ -141,10 +151,13 @@ class Agent():
             target_param.copy_(target_param * (1.0 - TARGET_NETWORK_MIX) + param * TARGET_NETWORK_MIX)
             
     def save_model_params(self):
-        torch.save(self.actor_local.state_dict(), 'actor_local_checkpoint.pth')
-        torch.save(self.actor_target.state_dict(), 'actor_target_checkpoint.pth')
-        torch.save(self.critic_local.state_dict(), 'critic_local_checkpoint.pth')
-        torch.save(self.critic_target.state_dict(), 'critic_target_checkpoint.pth')
+        if self.agent_name not in os.listdir('./agents'):
+            os.mkdir('./agents/%s' % self.agent_name)
+        
+        torch.save(self.actor_local.state_dict(), './agents/%s/actor_local_checkpoint.pth' % self.agent_name)
+        torch.save(self.actor_target.state_dict(), './agents/%s/actor_target_checkpoint.pth' % self.agent_name)
+        torch.save(self.critic_local.state_dict(), './agents/%s/critic_local_checkpoint.pth' % self.agent_name)
+        torch.save(self.critic_target.state_dict(), './agents/%s/critic_target_checkpoint.pth' % self.agent_name)
 
 class OUNoise:
     """Ornstein-Uhlenbeck process."""
@@ -173,78 +186,3 @@ class OUNoise:
         dx = self.theta * (self.mu - x) + self.sigma * np.array([random.random() for i in range(len(x))])
         self.state = x + dx
         return self.state
-
-class ReplayBuffer:
-    """Fixed-size buffer to store experience tuples."""
-
-    def __init__(self, buffer_size, batch_size, seed):
-        """Initialize a ReplayBuffer object.
-
-        Params
-        ======
-            buffer_size (int): maximum size of buffer
-            batch_size (int): size of each training batch
-            seed (int): random seed
-        """
-        self.memory = deque(maxlen=buffer_size)  
-        self.batch_size = batch_size
-        self.experience = namedtuple("Experience", field_names=["state", "action", "reward", "next_state", "done"])
-        self.seed = random.seed(seed)
-    
-    def add(self, state, action, reward, next_state, done):
-        """Add a new experience to memory."""
-        e = self.experience(state, action, reward, next_state, done)
-        self.memory.append(e)
-    
-    def sample(self):
-        """Randomly sample a batch of experiences from memory."""
-        experiences = random.sample(self.memory, k=self.batch_size)
-
-        states = torch.from_numpy(np.vstack([e.state for e in experiences if e is not None])).float().to(device)
-        actions = torch.from_numpy(np.vstack([e.action for e in experiences if e is not None])).float().to(device)
-        rewards = torch.from_numpy(np.vstack([e.reward for e in experiences if e is not None])).float().to(device)
-        next_states = torch.from_numpy(np.vstack([e.next_state for e in experiences if e is not None])).float().to(device)
-        dones = torch.from_numpy(np.vstack([e.done for e in experiences if e is not None]).astype(np.uint8)).float().to(device)
-  
-        return (states, actions, rewards, next_states, dones)
-
-    def __len__(self):
-        """Return the current size of internal memory."""
-        return len(self.memory)
-
-class DDPG_Net(nn.Module):
-    def __init__(self, input_dim, output_dim, hidden_dims):
-        """Initialize a Network for DDPG.
-
-        Params
-        ======
-            input_dim (int): dimension of input layer
-            output_dim (int): dimension of output layer
-            hidden_dims (array): array of dimensions of each hidden layer
-        """
-        super(DDPG_Net, self).__init__()
-        self.input_dim = input_dim
-        self.output_dim = output_dim
-        self.hidden_dims = hidden_dims
-        
-        assert(len(hidden_dims) >= 1)
-        
-        self.input_layer = nn.Linear(self.input_dim, self.hidden_dims[0])
-        
-        if len(self.hidden_dims) > 1:
-            hidden_layers = []
-            for i in range(len(hidden_dims)-1):
-                hidden_layers.append(nn.Linear(self.hidden_dims[i], self.hidden_dims[i+1]))
-            self.hidden_layers = nn.Sequential(*hidden_layers)
-
-        self.output_layer = nn.Linear(self.hidden_dims[-1], self.output_dim)
-        
-    def forward(self, x):
-        x = F.relu(self.input_layer(x))
-        
-        for hidden_layer in self.hidden_layers:
-            x = F.relu(hidden_layer(x))
-        
-        output = self.output_layer(x)
-        
-        return output
