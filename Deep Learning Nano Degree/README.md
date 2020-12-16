@@ -2,7 +2,7 @@
 
 ## [Certificate](https://confirm.udacity.com/FSRF6CYM)
 
-![image](https://user-images.githubusercontent.com/8471958/98634830-cd71ce00-22d8-11eb-8e2f-9227062fa9b6.png)
+![udacity_DL](https://user-images.githubusercontent.com/8471958/102291620-5c858d80-3ef8-11eb-95ea-fbaed5b89249.png)
 
 ## Program outline:
 
