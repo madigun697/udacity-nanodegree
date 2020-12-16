@@ -119,3 +119,7 @@ There are several improvements to the original DQN
 ### Rainbow
 
 - Rainbow DQN is combined six extension to DQN
+
+## [[Project] Navigation](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/2.%20Value-Based%20Methods/Project%201.%20Navigation)
+
+For this project, you will train an agent to navigate (and collect bananas!) in a large, square world.

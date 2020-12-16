@@ -62,5 +62,7 @@
     3. Update statistics, back-propagate and update $N$ and $U$ as neede
   - Select move with highest visit counts
 
+## [[Project] Collaborateion and Competition](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/4.%20Multi-Agent%20Reinforcement%20Learning/Project%203.%20Collaboration%20and%20Competition)
 
+For this project, you will work with the [Tennis](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#tennis) environment.
 

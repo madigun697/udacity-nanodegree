@@ -8,4 +8,5 @@
 ## [Deep Reinforcement Learning Nanodegre](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree)
 
 - Start Date: Nov 9, 2020
+- End Date: Dev 15, 2020
 

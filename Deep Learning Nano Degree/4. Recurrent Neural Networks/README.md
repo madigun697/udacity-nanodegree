@@ -356,3 +356,4 @@ print("Test accuracy: {:.3f}".format(test_acc))
 ## [[Project] Generate TV Scripts](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Learning%20Nano%20Degree/4.%20Recurrent%20Neural%20Networks/Project%204.%20Generate%20TV%20Scripts)
 
 In this project, you'll generate your own Seinfeld TV scripts using  RNNs. You'll be using a Seinfeld dataset of scripts from 9 seasons. The  Neural Network you'll build will generate a new, "fake" TV script.
+

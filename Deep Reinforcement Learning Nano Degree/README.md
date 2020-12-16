@@ -1,6 +1,8 @@
 # [Deep Reinforcement Learning Nanodegree](https://www.udacity.com/course/deep-reinforcement-learning-nanodegree--nd893)
 
-## Certificate
+## [Certificate](https://confirm.udacity.com/UDGHDKJY)
+
+![document](https://user-images.githubusercontent.com/8471958/102290855-b2593600-3ef6-11eb-9b70-51306726bc7d.png)
 
 ## Program outline:
 
@@ -20,11 +22,11 @@ Apply deep learning architectures to reinforcement learning tasks. Train your ow
 
 Learn the theory behind evolutionary algorithms and policy-gradient  methods. Design your own algorithm to train a simulated robotic arm to  reach target locations.
 
-- Project: Continuous Control
+- Project: [Continuous Control](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/3.%20Policy-Based%20Methods/Project%202.%20Continuous%20Control%20)
 
 ## [4. Multi-Agent Reinforcement Learning](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/4.%20Multi-Agent%20Reinforcement%20Learning)
 
 Learn how to apply reinforcement learning methods to applications that  involve multiple, interacting agents. These techniques are used in a  variety of applications, such as the coordination of autonomous  vehicles.
 
-- Project: Collaboration and Competition
+- Project: [Collaboration and Competition](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/4.%20Multi-Agent%20Reinforcement%20Learning/Project%203.%20Collaboration%20and%20Competition)
 

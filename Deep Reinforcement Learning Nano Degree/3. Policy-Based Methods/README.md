@@ -182,9 +182,9 @@ Policy Gradient Methods is one of the Policy-Based Methods that estimate the wei
     - In the DDPG, ther target networks weights are updated to mix of target and regular networks weights by everytime
       - For example, if the interpolation parameter(<img src="https://render.githubusercontent.com/render/math?math=\tau">) is 0.01, the target networks weigths are updated mix in 0.01% regular networks weights and 99.99% target networks weights
 
+## [[Project] Continuous Control](https://github.com/madigun697/udacity-nanodegree/tree/master/Deep%20Reinforcement%20Learning%20Nano%20Degree/3.%20Policy-Based%20Methods/Project%202.%20Continuous%20Control%20)
 
-
-
+For this project, you will work with the [Reacher](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#reacher) environment.
 
 ## References
 
